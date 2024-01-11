@@ -5,10 +5,10 @@ import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import Slide from '@mui/material/Slide'
 import styled from 'styled-components'
-import Link from '@mui/material/Link'
+import {Link, Icon} from '@mui/material'
 import useAppState from "../../../../store/appState/useAppState"
 import React, {HTMLAttributes, useState, useEffect, useMemo} from "react"
-import { getCONETBalance, regionType, faucet as faucetAPI, setRegion as setRegionAPI, getRegiestNodes as getRegiestNodesAPI, startProxy, testLocalServer, getIPaddress} from '../../../../API/index'
+import { scanAssets,  regionType, faucet as faucetAPI, setRegion as setRegionAPI, getRegiestNodes as getRegiestNodesAPI, startProxy, testLocalServer, getIPaddress, initListenState, getAllNodes} from '../../../../API/index'
 import {logger} from '../../logger'
 import CircularProgress from '@mui/material/CircularProgress'
 import type {nodes_info} from './SaasNodes'
@@ -27,13 +27,9 @@ import AndroidIcon from '@mui/icons-material/Android'
 import macOSSetup from './assets/images/MacOS.png'
 import winSetupImg from './assets/images/winSetup.png'
 import WindowSharpIcon from '@mui/icons-material/WindowSharp'
-const regions: regionType = {
-    us: true,
-    uk: false,
-    ge: false,
-    sp: false,
-    fr: false
-}
+import { loadCSS } from 'fg-loadcss'
+import {getWorkerService} from '../../../../services/workerService/workerService'
+
 
 
 const ChromeImg = styled.img`
@@ -265,8 +261,19 @@ const FeatureArea8ItemNew = () => {
         isProxyStart,
         setIsProxyStart
     } = useAppState()
-
-    const [CONET_Balance, setCONET_Balance] = useState('0')
+	const currentProfile = () => {
+		const workerService = getWorkerService()
+		if (workerService.data.passcode.status === 'LOCKED') {
+			return null
+		}
+		const index = workerService.data.profiles.findIndex((n:any) => {
+			return n.isPrimary
+		})
+	
+		return workerService.data.profiles[index]
+	}
+	const profile = currentProfile()
+    const [CONET_Balance, setCONET_Balance] = useState(profile.tokens.conet.balance)
     const [nodes, setNodes] = useState<nodes_info[]>([])
     const [value, setValue] = React.useState(0)
 	const [value1, setValue1] = React.useState(0)
@@ -276,8 +283,9 @@ const FeatureArea8ItemNew = () => {
     const [faucetError, setFaucetError] =  useState(false)
     const [regionProgress,setRegionProgress] = useState(false)
     const [showConfirm, setShowConfirm] = useState(true)
-    const [startProxyError, setStartProxyError] =  useState(false)
-
+    const [startProxyError, setStartProxyError] = useState(false)
+	const [conetLoading, setConetLoading] = useState(false)
+	const [regions, setRegions] = useState<string[]>([])
 
     const showStartProxy = () => (parseFloat(CONET_Balance) > 0 || nodes.length > 0)&& !isProxyStart
 
@@ -285,19 +293,43 @@ const FeatureArea8ItemNew = () => {
         
         const fetchData = async () => {
             if (!active) { return }
-            const [status, data] = await getCONETBalance()
-            if (status !== 'SUCCESS' || !data) {
-                return logger('LaunchPage Error', 'useEffect fetchData getCONETBalance had no SUCCESS')
-            }
+			const node = loadCSS(
+				'https://use.fontawesome.com/releases/v6.5.1/css/all.css',
+				// Inject before JSS
+				//@ts-ignore
+				document.querySelector('#font-awesome-css') || document.head.firstChild
+			)
 
-            logger (`getCONETBalance SUCCESS`, data)
+			
+			
+			initListenState('cntp-balance', data => {
+				setConetLoading(false)
+				logger (`getCONETBalance SUCCESS`, data)
+				setCONET_Balance(data.CONET_Balance)
+			})
+			await scanAssets ()
+			const [succes, nodes] = await getAllNodes()
+			if (succes === 'SUCCESS') {
+				const k = nodes[0].node
+				//	@ts-ignore
+				const uuu = Object.groupBy(k, n => n.country)
+				const regions = Object.keys(uuu)
+				setRegions(regions)
+			}
+			
             
-            setCONET_Balance(data[1].toString())
-            const _nodes: nodes_info[] = data[2]
-            if (_nodes.length > 0) {
-                setNodes(_nodes)
-                _startProxy()
-            }
+            
+            // setCONET_Balance(data[1].toString())
+            // const _nodes: nodes_info[] = data[2]
+            // if (_nodes.length > 0) {
+            //     setNodes(_nodes)
+            //     _startProxy()
+            // }
+
+			return () => { 
+				active = false
+				node.parentNode!.removeChild(node)
+			}
         }
       
         let active = true
@@ -344,20 +376,20 @@ const FeatureArea8ItemNew = () => {
         if (nodes.length > 0) {
             return _startProxy()
         }
-        const [status, data] = await setRegionAPI(regions)
-        setRegionProgress(false)
-        if (status === 'SUCCESS') {
-            const [status1, data1] = await getRegiestNodesAPI()
-            if (status1 !== 'SUCCESS' || !data) {
-                return logger('LaunchPage Error', 'useEffect fetchData getCONETBalance had no SUCCESS')
-            }
-            const _nodes: nodes_info[] = data1[0]
-            _nodes.forEach( n => {
-                n.balance = getBalance(n.receipt[0].value)
-            })
-            setNodes(_nodes)
-            return _startProxy()
-        }
+        //const [status, data] = await setRegionAPI(regions)
+        // setRegionProgress(false)
+        // if (status === 'SUCCESS') {
+        //     const [status1, data1] = await getRegiestNodesAPI()
+        //     if (status1 !== 'SUCCESS' || !data) {
+        //         return logger('LaunchPage Error', 'useEffect fetchData getCONETBalance had no SUCCESS')
+        //     }
+        //     const _nodes: nodes_info[] = data1[0]
+        //     _nodes.forEach( n => {
+        //         n.balance = getBalance(n.receipt[0].value)
+        //     })
+        //     setNodes(_nodes)
+        //     return _startProxy()
+        // }
     }
 
     const faucetClick = async () => {
@@ -394,27 +426,37 @@ const FeatureArea8ItemNew = () => {
                         <Typography variant="h6" sx={{ textAlign:'center'}}>
                             {intl.formatMessage({id: 'platform.proxy.featureArea8Item.step1.CONETbalance'})}
                         </Typography>
-                        <Typography variant="h5" sx={{ textAlign:'center', fontWeight: '600'}}>
-                            {CONET_Balance}
-                        </Typography>
-                        {
-                            faucetProcess && 
-                                <Box sx={{ display: 'block', textAlign: 'center', width: '100%' }}>
-                                    <CircularProgress color='success' disableShrink/>
-                                </Box>
-                        }
-                        {
-                            faucetError &&
-                            <Typography variant="h6" sx={{ textAlign:'center', color: '#ba1a1a'}}>
-                                {intl.formatMessage({id: 'platform.ProfileDropdown.faucet.error'})}
-                            </Typography>
-                        }
-                        {
-                            !faucetProcess && 
-                                <Button size="large" variant="outlined" onClick={faucetClick} sx={{fontFamily: 'inherit', width: '10rem'}}>
-                                    {intl.formatMessage({id: 'platform.ProfileDropdown.CurrentProfileItem.actionFondWallet'})}
-                                </Button>
-                        }
+						{
+							conetLoading &&
+							<Icon baseClassName="fa-solid" className="fa-circle-notch fa-spin" sx={{ fontSize: 20, color: '#6e7b63' }} />
+						}
+						{
+							!conetLoading &&
+							<Box>
+								<Typography variant="h5" sx={{ textAlign:'center', fontWeight: '600', padding: '0rem 0 1rem 0'}}>
+									{CONET_Balance}
+								</Typography>
+								{
+									faucetProcess && 
+										<Box sx={{ display: 'block', textAlign: 'center', width: '100%' }}>
+											<CircularProgress color='success' disableShrink/>
+										</Box>
+								}
+								{
+									faucetError &&
+									<Typography variant="h6" sx={{ textAlign:'center', color: '#ba1a1a'}}>
+										{intl.formatMessage({id: 'platform.ProfileDropdown.faucet.error'})}
+									</Typography>
+								}
+								{
+									!faucetProcess && 
+										<Button size="large" variant="outlined" onClick={faucetClick} sx={{fontFamily: 'inherit', width: '10rem'}}>
+											{intl.formatMessage({id: 'platform.ProfileDropdown.CurrentProfileItem.actionFondWallet'})}
+										</Button>
+								}
+							</Box>
+							
+						}
                     </Stack>
                 </Grid>
                 <Grid item xs={12} sx={{textAlign: 'center', width: '100%'}}>
@@ -476,51 +518,52 @@ const FeatureArea8ItemNew = () => {
 						</Tabs>
 					</Box>
 						
-						
-					<CustomTabPanel value={value1} index={0}>
-						<Slide direction={animei1} in={value1===0} mountOnEnter unmountOnExit>
-							<Stack spacing={2} justifyContent="center" alignItems="center" sx={{width: '100%', padding:'2rem 0 0 0'}}>
-								<ChromeSetup />
-							</Stack>
-						</Slide>
-				
-					</CustomTabPanel>
-						
-					<CustomTabPanel value={value1} index={1}>
-						<Slide direction={animei1} in={value1===1} mountOnEnter unmountOnExit>
-							<Container>
-								<FireFoxSetup />
-							</Container>
-						</Slide>
-					</CustomTabPanel>
-					<CustomTabPanel value={value1} index={2}>
-						<Slide direction={animei1} in={value1===2} mountOnEnter unmountOnExit>
-							<Container >
-								<IOS />
-							</Container>
-						</Slide>
-					</CustomTabPanel>
-					<CustomTabPanel value={value1} index={3}>
-						<Slide direction={animei1} in={value1===3} mountOnEnter unmountOnExit>
-							<Container sx={{width: '100%'}}>
-								<AndroidSetup />
-							</Container>
-						</Slide>
-					</CustomTabPanel>
-					<CustomTabPanel value={value1} index={4}>
-						<Slide direction={animei1} in={value1===4} mountOnEnter unmountOnExit>
-							<Container sx={{width: '100%'}}>
-								<MacOSSetup />
-							</Container>
-						</Slide>
-					</CustomTabPanel>
-					<CustomTabPanel value={value1} index={5}>
-						<Slide direction={animei1} in={value1===5} mountOnEnter unmountOnExit>
-							<Container  sx={{width: '100%'}}>
-								<WinSetup />
-							</Container>
-						</Slide>
-					</CustomTabPanel>
+					<Box>
+						<CustomTabPanel value={value1} index={0}>
+							<Slide direction={animei1} in={value1===0} mountOnEnter unmountOnExit>
+								<Stack spacing={2} justifyContent="center" alignItems="center" sx={{width: '100%', padding:'2rem 0 0 0'}}>
+									<ChromeSetup />
+								</Stack>
+							</Slide>
+					
+						</CustomTabPanel>
+							
+						<CustomTabPanel value={value1} index={1}>
+							<Slide direction={animei1} in={value1===1} mountOnEnter unmountOnExit>
+								<Container>
+									<FireFoxSetup />
+								</Container>
+							</Slide>
+						</CustomTabPanel>
+						<CustomTabPanel value={value1} index={2}>
+							<Slide direction={animei1} in={value1===2} mountOnEnter unmountOnExit>
+								<Container >
+									<IOS />
+								</Container>
+							</Slide>
+						</CustomTabPanel>
+						<CustomTabPanel value={value1} index={3}>
+							<Slide direction={animei1} in={value1===3} mountOnEnter unmountOnExit>
+								<Container sx={{width: '100%'}}>
+									<AndroidSetup />
+								</Container>
+							</Slide>
+						</CustomTabPanel>
+						<CustomTabPanel value={value1} index={4}>
+							<Slide direction={animei1} in={value1===4} mountOnEnter unmountOnExit>
+								<Container sx={{width: '100%'}}>
+									<MacOSSetup />
+								</Container>
+							</Slide>
+						</CustomTabPanel>
+						<CustomTabPanel value={value1} index={5}>
+							<Slide direction={animei1} in={value1===5} mountOnEnter unmountOnExit>
+								<Container  sx={{width: '100%'}}>
+									<WinSetup />
+								</Container>
+							</Slide>
+						</CustomTabPanel>
+					</Box>
 				</Grid>
 			}
 			<Grid item  sx={{textAlign: 'center', width: '100%', alignItems:"center", padding: '2rem 0 2rem 0'}}>

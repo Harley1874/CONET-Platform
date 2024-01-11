@@ -13,7 +13,7 @@ import {
     ProfileData
 } from "./appStateReducer"
 
-export type dAPPOpen = 'miner'|'proxy'|'nodes'
+export type dAPPOpen = 'miner'|'proxy'|'nodes'|'cloudNode'
 
 export const setIsUnlocked = createAction(
     'appState/isUnlocked',

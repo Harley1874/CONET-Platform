@@ -5,15 +5,10 @@ import { initListenState, getAllNodes} from '../../../../API/index'
 import WalletIcon from '@mui/icons-material/Wallet'
 import { LogoIcon, LogoText} from "../../../../components/UI/Logo/Logo"
 import { red, blueGrey, blue, green, grey } from '@mui/material/colors'
-import PublicIcon from '@mui/icons-material/Public'
-import {US,JP, SG, AU, CA, KR, IN, IE, SE} from 'country-flag-icons/react/3x2'
+import {US,JP, SG, AU, CA, KR, IN, IE, SE, GB, FR} from 'country-flag-icons/react/3x2'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
 import { loadCSS } from 'fg-loadcss'
 import { Pie } from 'react-chartjs-2'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import { faContao } from '@fortawesome/free-brands-svg-icons'
-import { Container, createStyles, makeStyles } from "@mui/material"
-import BrightnessLowIcon from '@mui/icons-material/BrightnessLow'
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 const ItemStyle = materialStyled(Paper)(() => ({
@@ -31,13 +26,14 @@ const ItemStylePie = materialStyled(Paper)(() => ({
 	height: '23rem'
 }))
 
-interface nodeType {
+export interface nodeType {
 	ip_addr: string
 	minerAddr: string
 	running: boolean
 	wallet_addr: string
 	balance: string
 	country: string
+	type: 'seed'|'super'
 }
 interface pieDatasets {
 	label: string
@@ -79,6 +75,12 @@ const countryGetIcon = (country: string) => {
 		}
 		case 'JP': {
 			return <SvgIcon component={JP} inheritViewBox/>
+		}
+		case 'GB': {
+			return <SvgIcon component={GB} inheritViewBox/>
+		}
+		case 'FR': {
+			return <SvgIcon component={FR} inheritViewBox/>
 		}
 	}
 		
@@ -130,20 +132,23 @@ const Overview = () => {
 	
 
 	const setDates = (data: any) => {
-		setCNTPMint(n => data.balance.toFixed(0))
-		const bala = (((100000000-data.balance)/100000000)*100).toFixed(2)
-		setCNTPBalance(n => bala.toString()+'%')
-		const nodes: nodeType[] = data.nodes
+		const CNTPbalance = parseFloat(data.masterBalance.CNTPMasterBalance)+parseFloat(data.masterBalance.CNTPReferralBalance)
+		const minted = (100000000-CNTPbalance).toFixed(0)
+		setCNTPMint(parseFloat(minted))
+		const bala = ((CNTPbalance/100000000)*100).toFixed(2)
+		setCNTPBalance(bala+'%')
+		const nodes: nodeType[] = data.node
 		
 		if (nodes?.length > 1) {
-			setNodesDetail(n => data.nodes)
-			
-			nodes.sort((a,b) =>parseFloat(b.balance) - parseFloat(a.balance))
-			setNodes(nodes.length)
+			setNodesDetail(n => nodes)
+			nodes.forEach(n => {
+				n.balance = parseFloat(n.balance).toFixed(0)
+			})
+			nodes.sort((a,b) =>parseInt(b.balance) - parseInt(a.balance))
+			setNodes(n => nodes.length)
 			const running = nodes.filter(n => n.running)
 			setRunningNodes(n => running.length)
 		}
-		
 		
 	}
 	
@@ -169,9 +174,9 @@ const Overview = () => {
 				setWalletCounting(data.total_addresses)
 				const [succes, nodes] = await getAllNodes()
 				setDates(nodes[0])
-				initListenState('cntp-balance', data => {
-					return setDates(data)
-				})
+				// initListenState('nodes', data => {
+				// 	return setDates(data)
+				// })
 			})
 			const node = loadCSS(
 					'https://use.fontawesome.com/releases/v6.5.1/css/all.css',
@@ -181,7 +186,7 @@ const Overview = () => {
 		  
 			  return () => {
 				node.parentNode!.removeChild(node)
-			};
+			}
         }
 		
 		let active = true
@@ -269,33 +274,32 @@ const Overview = () => {
 										sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
 									>
 										<TableCell component="th" scope="row">
-											<Link target="_blank" href={'https://scan.conet.network/address/'+n.minerAddr+'?tab=token_transfers'}>
-												{n.wallet_addr.substring(0,5)+'....'+ n.wallet_addr.substring(37)}
+											<Link target="_blank" color='#2e7d32' href={'https://scan.conet.network/address/'+n.minerAddr+'?tab=token_transfers'}>
+												{n.minerAddr.substring(0,7)+'...'+ n.minerAddr.substring(37)}
 											</Link>
 											
 										</TableCell>
 										<TableCell component="th" scope="row">
-											{n.ip_addr}
+											<Link target="_blank" color='#2e7d32' href={'https://dnschecker.org/ip-location.php?ip='+n.ip_addr}>
+												{n.ip_addr}
+											</Link>
 										</TableCell>
 										<TableCell component="th" scope="row">
 											{countryGetIcon(n.country)}
 										</TableCell>
 										<TableCell component="th" scope="row">
-											<Icon baseClassName="fa-solid" className="fa-gear fa-spin" sx={{ fontSize: 10, color: '#6e7b63' }} />
+											<Icon baseClassName="fa-solid" className="fa-gear fa-spin" sx={{ fontSize: 13, color: '#6e7b63' }} />
 										</TableCell>
 										<TableCell component="th" scope="row" align="right">
 											<Stack direction="row" alignItems="center" sx={{width: '100%'}} justifyContent="flex-end">
-												<Fade in={n.balance.length>0}>
+												
 													<Typography variant="body2" sx={{ padding: '0rem 0 0 0', textAlign: 'right'}}>
 														{n.balance}
 													</Typography>
-												</Fade>
 												
-												<LogoIcon size={20} color={green[300]}/>
+												<LogoIcon size={15} color={green[300]}/>
 											</Stack>
 												
-										
-											
 										</TableCell>
 										
 									</TableRow>
@@ -318,7 +322,7 @@ const NodeExplorer = () => {
 				<Typography variant="h4" sx={{ fontWeight: '900'}}>
 						{intl.formatMessage({id: 'platform.conet.explorer.title'})}
 				</Typography>
-
+			
 			</Grid>
 			< Overview/>
 			

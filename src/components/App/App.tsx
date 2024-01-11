@@ -5,14 +5,13 @@ import CssBaseline from "@mui/material/CssBaseline"
 import { CssVarsProvider, useColorScheme, extendTheme, useTheme } from "@mui/material-next/styles"
 import {argbFromHex,hexFromArgb,themeFromSourceColor} from "@material/material-color-utilities"
 import Dashboard from './Apps/dashboard/index-next'
+import {initListenState} from '../../API/index'
 
 const createCssVarsTheme = (palette: any) => {
     const theme = extendTheme({
         colorSchemes: {
             light: {
-                ref: {
-                    palette
-                },
+            
                 palette: {
                     background: {
                         default: '#fdfdf6',
@@ -22,9 +21,7 @@ const createCssVarsTheme = (palette: any) => {
                 
             },
             dark: {
-                ref: {
-                    palette
-                },
+               
                 palette: {
                     background: {
                         default: '#1a1c18',
@@ -62,6 +59,40 @@ const App = () => {
     } = useAppState()
 
     const [palette, setPalette] = useState<any>(null)
+
+	const beforeunload = (event: BeforeUnloadEvent) => {
+	
+		if (typeof event.preventDefault === 'function') {
+			event.preventDefault()
+		}
+		
+		(event || window.event).returnValue = true
+		
+		return true
+		
+	}
+	useEffect(() => {
+		const fetchData = () => {
+			if (!active) {
+				return
+			}
+			initListenState('beforeunload', result => {
+				if (result) {
+					return window.addEventListener('beforeunload', beforeunload)
+				}
+				return window.removeEventListener('beforeunload', beforeunload)
+			})
+			// window.addEventListener('unload', (event) =>{
+			// 	event.preventDefault()
+			// })
+		}
+		
+		let active = true
+        fetchData()
+        return () => { 
+			active = false 
+		}
+	},[])
 
 
     useEffect(() => {

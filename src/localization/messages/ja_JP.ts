@@ -348,8 +348,8 @@ const ja_JP: Messages = {
 	'platform.joinUS.miner.cloud.table.title2': 'スーパーノード',
 	'platform.joinUS.miner.cloud.table.item2': '倍率',
 	'platform.joinUS.miner.cloud.table.item1': '前売り価格',
-	'platform.joinUS.miner.cloud.table.item2-seed': '6X',
-	'platform.joinUS.miner.cloud.table.item2-super': '12X',
+	'platform.joinUS.miner.cloud.table.item2-seed': '総量の32.3%を占める',
+	'platform.joinUS.miner.cloud.table.item2-super': '総量の60.3%を占める',
 	'platform.joinUS.miner.cloud.table.item3': '限定数',
 	'platform.joinUS.miner.cloud.table.item4': '運用の継続性',
 	'platform.joinUS.miner.cloud.table.item5': '保守料金',
@@ -359,6 +359,7 @@ const ja_JP: Messages = {
 	'platform.joinUS.miner.cloud.table.item7-2': '1台',
 	'platform.joinUS.miner.cloud.table.item8': '特別な特典',
 	'platform.joinUS.miner.cloud.table.item8-2': 'マイニングマシンの利益分配に参加し、Blast L2からの独占的なエアドロップ',
+	'platform.joinUS.miner.cloud.table.itemAvailable': '残り数',
 
     'platform.joinUS.joinMiner.button': 'CONETマイニングに参加',
     'platform.joinUS.forUser.Title1': 'Web3アプリケーション',//'分散型プライバシーを強化',
@@ -383,7 +384,7 @@ const ja_JP: Messages = {
     'platform.miner.header.title': 'ようこそCONET参加者の皆様',
 	'platform.miner.header.title.detial': 'なぜあなたの参加がCONETにとても重要な理由',
 	'platform.miner.header.title.smartContract': 'CNTP ERC20スマートコントラクト',
-	'platform.miner.community.referral.detail': '参加者を紹介してスピードアップ',
+	'platform.miner.community.referral.detail': 'みんなにCoNETに触れに行くよう伝えて',
 
     'platform.miner.register.title': 'ノードプロバイダ',
     'platform.miner.register.button': '始めましょう',
@@ -411,6 +412,9 @@ const ja_JP: Messages = {
 	'platform.miner.community.liveness.title': 'アクティブ',
 	'platform.miner.community.liveness.detail': 'いつでもどこでもオンラインでアクティブになり、Rewardsを獲得しましょう',
 	'platform.miner.community.liveness.sameIPError': 'エラー！IPアドレスが占有されています。後でもう一度お試しください',
+	'platform.miner.community.liveness.Timeout1': 'CONETサーバーの応答タイムアウト',
+	'platform.miner.community.liveness.Timeout2': '只今サーバーがビジー状態です。しばらくしてからもう一度お試しください',
+	'platform.miner.community.liveness.chainDelayInfo': 'CONET Holeskyでのトランザクションが混雑しているため、CNTPは正しく表示されるまで約20分遅れる可能性があります',
 	'platform.miner.community.liveness.sameMinerError': 'エラー! 別のインスタンスを実行しています。後でもう一度試してください',
 	'platform.miner.community.referral.detail1': `直接推薦`,
 	'platform.miner.community.referral.detail1-1': `誰かがあなたの推薦リンクを使用してCONETに参加すると、あなたは紹介された人の収益の20%のボーナスを継続的に受け取ります。`,
@@ -427,9 +431,26 @@ const ja_JP: Messages = {
 	'platform.conet.explorer.CNTP': 'CNTP総供給量',
 	'platform.conet.explorer.CNTP.mint': '採掘済みCNTP',
 	'platform.conet.explorer.CNTP.balance': '残りCNTP',
-	'platform.conet.explorer.CNTP.relayNodes': 'CONETネットワークリレーノード'
+	'platform.conet.explorer.CNTP.relayNodes': 'CONETネットワークリレーノード',
 
+	'platform.miner.cloudnode.orderButton': 'オーダークラウドノード',
+	'platform.miner.cloudnode.orderInfo': '発売中',
 
+	'platform.miner.cloudnode.orderForm.Title': 'CONETクラウドノード注文フォーム',
+	'platform.miner.cloudnode.orderForm.detail': 'CONET Layer Minusネットワークバックボーンノードは、CONETユーザーに高スループットのネットワークデータ転送を提供し、CNTPインセンティブにおける中断のない独占的な報酬を保証します。',
+	'platform.miner.cloudnode.orderForm.pie.freeuser': '無料ユーザーのシェア率',
+	'platform.miner.cloudnode.orderForm.pie.seednode': 'シードノードのシェア率',
+	'platform.miner.cloudnode.orderForm.pie.supernode': 'スーパーノードのシェア率',
+	'platform.miner.cloudnode.orderForm.walletAddr': 'あなたのウォレットアドレス（複数のアドレスはカンマで区切ってください）',
+	'platform.miner.cloudnode.orderForm.seednodeAmount': 'シードノード数',
+	'platform.miner.cloudnode.orderForm.supernodeAmount': 'スーパーノード数',
+	'platform.miner.cloudnode.orderForm.tx': 'USDT送金TX',
+	'platform.miner.cloudnode.orderForm.CONETWalletAddress': 'CONETウォレットアドレス(イーサリアム): 0xF832ac957988150368714f7AF254C4108917bD18',
+	'platform.miner.cloudnode.orderForm.email': 'あなたのEmail',
+	'platform.miner.cloudnode.orderForm.node': 'ノードは送金を確認した24時間以内立ち上げ',
+	'platform.cantbeclose': 'CONETプラットフォームは現在データ書き込み操作を実行しています。 データの損失を防ぐため、終了する前に少し待ってください。',
+
+	'platform.button.error': 'エラー'
 }
 
 export default ja_JP

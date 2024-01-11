@@ -7,6 +7,7 @@ export type Locale = (
 
 export type Messages = {
     'main.greeting': string
+
 	'LaunchScreen.loadFail': string
     'onboarding.selectLanguageTitle': string
     'onboarding.selectLanguageSubtitle': string
@@ -73,7 +74,7 @@ export type Messages = {
     'drawer.settings': string
     'drawer.updates': string
     'drawer.support': string
-
+	'platform.cantbeclose': string
     'platform.overlay.unlocking': string
     'platform.overlay.createProfile': string
 
@@ -362,6 +363,8 @@ export type Messages = {
 	'platform.joinUS.miner.cloud.table.item8': string
 	'platform.joinUS.miner.cloud.table.item8-2': string
 
+	'platform.joinUS.miner.cloud.table.itemAvailable': string
+
     'platform.joinUS.joinMiner.button': string
 
     'platform.joinUS.forUser.Title1': string
@@ -412,8 +415,11 @@ export type Messages = {
 	'platform.miner.community.liveness.title': string
 	'platform.miner.community.liveness.detail': string
 	'platform.miner.community.liveness.sameIPError': string
+	'platform.miner.community.liveness.Timeout1': string
+	'platform.miner.community.liveness.Timeout2': string
 	'platform.miner.community.liveness.sameMinerError': string
 	'platform.miner.community.liveness.referrer': string
+	'platform.miner.community.liveness.chainDelayInfo': string
 
 	'platform.miner.community.referral.detail': string
 	'platform.miner.community.referral.detail1': string
@@ -433,6 +439,27 @@ export type Messages = {
 	'platform.conet.explorer.CNTP.mint': string
 	'platform.conet.explorer.CNTP.balance': string
 	'platform.conet.explorer.CNTP.relayNodes': string
+
+	'platform.miner.cloudnode.orderButton': string
+
+	'platform.miner.cloudnode.orderInfo': string
+
+	'platform.miner.cloudnode.orderForm.Title': string
+	'platform.miner.cloudnode.orderForm.detail': string
+	'platform.miner.cloudnode.orderForm.pie.freeuser': string
+	'platform.miner.cloudnode.orderForm.pie.seednode': string
+	'platform.miner.cloudnode.orderForm.pie.supernode': string
+
+	'platform.miner.cloudnode.orderForm.walletAddr': string
+	'platform.miner.cloudnode.orderForm.seednodeAmount': string
+	'platform.miner.cloudnode.orderForm.supernodeAmount': string
+	'platform.miner.cloudnode.orderForm.CONETWalletAddress': string
+	'platform.miner.cloudnode.orderForm.email': string
+	'platform.miner.cloudnode.orderForm.tx': string
+	'platform.miner.cloudnode.orderForm.node': string
+
+	'platform.button.error': string
+
     
 }
 export type MessagesByLocale = Record<Locale, Messages>

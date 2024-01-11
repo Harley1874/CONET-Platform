@@ -276,7 +276,7 @@ const zh_CN: Messages = {
 
     'platform.home': 'CONET平台',
     'platform.proxy': '连结Web2和Web3的数据高速桥梁',
-    'platform.proxy-1': '通过钱包地址访问IP地址服务器',
+    'platform.proxy-1': '使用钱包地址，去访问Youtube，靜悄悄無影無蹤！',
     'platform.proxy.title': '最隐私的高速代理',
     'platform.proxy.FeatureArea.title.1': 'CONET代理，重新定義隐私VPN市场',
     'platform.proxy.FeatureArea.title.2': ' ',
@@ -339,8 +339,8 @@ const zh_CN: Messages = {
 	'platform.joinUS.miner.cloud.table.title2': '超级节点',
 	'platform.joinUS.miner.cloud.table.item1': '预售价',
 	'platform.joinUS.miner.cloud.table.item2': '挖矿速率',
-	'platform.joinUS.miner.cloud.table.item2-seed': '6X',
-	'platform.joinUS.miner.cloud.table.item2-super': '12X',
+	'platform.joinUS.miner.cloud.table.item2-seed': '分享总产量32.3%',
+	'platform.joinUS.miner.cloud.table.item2-super': '分享总产量60.3%',
 	'platform.joinUS.miner.cloud.table.item3': '限定数量',
 	'platform.joinUS.miner.cloud.table.item4': '运行持续性',
 	'platform.joinUS.miner.cloud.table.item5': '维护费用',
@@ -350,6 +350,7 @@ const zh_CN: Messages = {
 	'platform.joinUS.miner.cloud.table.item7-2': '1台',
 	'platform.joinUS.miner.cloud.table.item8': '独特福利',
 	'platform.joinUS.miner.cloud.table.item8-2': 'Blast空投，矿机利润红利',
+	'platform.joinUS.miner.cloud.table.itemAvailable': '剩余数量',
 
     'platform.joinUS.joinMiner.button': '加入CONET挖矿',
     'platform.joinUS.forUser.Title1': 'Web3应用程序',//'去中心化隐私增强',
@@ -394,7 +395,7 @@ const zh_CN: Messages = {
     'platform.miner.register.referrals': '推荐',
 	'platform.miner.register.referralsList': '推荐一览表',
 	'platform.miner.register.referralsEmpty': '您暂无推荐',
-	'platform.miner.community.referral.detail': '通过推荐参与者获得加速',
+	'platform.miner.community.referral.detail': '通过推荐传播获得加速的奖励',
 	'platform.conet.cotp.Symbol': 'CNTP',
 	'platform.conet.cotp.name': 'CONET积分',
 	'platform.miner.community.referral.detail1': '直接推荐',
@@ -407,6 +408,9 @@ const zh_CN: Messages = {
 	'platform.miner.community.liveness.title': '活力',
 	'platform.miner.community.liveness.detail': '随时随地在线关注活跃即可获得奖励',
 	'platform.miner.community.liveness.sameIPError': '错误！ 您的IP地址已被占用，请稍后重试',
+	'platform.miner.community.liveness.Timeout1': 'CONET服务器超时',
+	'platform.miner.community.liveness.Timeout2': '目前可能处于繁忙阶段，请稍后再试',
+	'platform.miner.community.liveness.chainDelayInfo': '由于CONET Holesky交易繁忙，您收到的CNTP可能会延迟大约20分钟',
 	'platform.miner.community.liveness.sameMinerError': '错误！您正在运行另一个实例，请稍后再试',
 	'platform.miner.nwteork.Slashing': 'CONET主鏈正執行升級，請等待完成！',
 	'platform.miner.community.liveness.yourReferrer': '您的推荐人',
@@ -419,7 +423,28 @@ const zh_CN: Messages = {
 	'platform.conet.explorer.CNTP': 'CNTP发行总量',
 	'platform.conet.explorer.CNTP.mint': '已产矿CNTP',
 	'platform.conet.explorer.CNTP.balance': '剩余CNTP',
-	'platform.conet.explorer.CNTP.relayNodes': 'CONET网络中继节点'
+	'platform.conet.explorer.CNTP.relayNodes': 'CONET网络中继节点',
+
+	'platform.miner.cloudnode.orderButton': '订购云节点',
+	'platform.miner.cloudnode.orderInfo': '正在开售中',
+
+
+	'platform.miner.cloudnode.orderForm.Title': 'CONET云节点订购表',
+	'platform.miner.cloudnode.orderForm.detail': 'CONET Layer Minus网络骨干节点，提供CONET用户高吞吐网络数据转发，不间断独享CNTP云节点奖励份额',
+	'platform.miner.cloudnode.orderForm.pie.freeuser': '免费用户共享百分比',
+	'platform.miner.cloudnode.orderForm.pie.seednode': '种子节点共享百分比',
+	'platform.miner.cloudnode.orderForm.pie.supernode': '超级节点共享百分比',
+	'platform.miner.cloudnode.orderForm.walletAddr': '您的钱包地址(多个地址请用逗号分隔)',
+	'platform.miner.cloudnode.orderForm.seednodeAmount': '订购种子节点数',
+	'platform.miner.cloudnode.orderForm.supernodeAmount': '订购超级节点数',
+	'platform.miner.cloudnode.orderForm.tx': 'USDT转账TX',
+	'platform.miner.cloudnode.orderForm.CONETWalletAddress': 'CONET钱包地址(以太坊): 0xF832ac957988150368714f7AF254C4108917bD18',
+	'platform.miner.cloudnode.orderForm.email': '您的Email',
+	'platform.miner.cloudnode.orderForm.node': '节点将在转账确认后24小时内部署',
+
+	'platform.cantbeclose': 'CONET平台客戶端正执行数据写入，为防止数据丢失，请稍等片刻再退出',
+
+	'platform.button.error': '错误'
 
 	
 }

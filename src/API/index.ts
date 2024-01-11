@@ -33,7 +33,7 @@ export type SeguroNetworkStatus = WorkerCallStatus |
 'SEGURO_ERROR'|'UNKNOW_ERROR'|'SEGURO_DATA_FORMAT_ERROR'
 
 const ver = '0.0.13'
-
+export const cntp_address = '0x0f43685B2cB08b9FB8Ca1D981fF078C22Fec84c5'
 
 /*eslint-disable */
 export interface profile {
@@ -213,7 +213,7 @@ const postMessage = (cmd: WorkerCommand, close: boolean,  resolve: any, Callback
 				return resolve([cmd.err, cmd.data])
 			}
 			if (Callback) {
-				return Callback('SYSTEM_ERROR', [])
+				return Callback(cmd.err, [cmd.data])
 			}
             return console.log (`postMessage Callback && resolve all null`, cmd.err)
         }
@@ -252,10 +252,10 @@ export const faucet: () => Promise < StartWorkerResolveForAPI > = () => {
     })
 }
 
-export const getCONETBalance: () => Promise < StartWorkerResolveForAPI > = () => {
+export const getNodesInfo: () => Promise < StartWorkerResolveForAPI > = () => {
     return new Promise( resolve => {
         const cmd: WorkerCommand = {
-            cmd: 'getCONETBalance',
+            cmd: 'getAllNodes',
             uuid: v4()
         }
         return postMessage (cmd, true, resolve)
@@ -307,9 +307,7 @@ export const createPasscode : (passcord: string, local: string) => Promise < Sta
             uuid: v4(),
             data: [passcord, local, referrals]
         }
-
         return postMessage (cmd, true, resolve)
-
     })
 }
 
@@ -346,7 +344,7 @@ export const startLiveness: (callback: (err: string, data: string[]) => void) =>
         }
         return postMessage (cmd, false, null, (err, data) => {
 			if (err) {
-				return callback (err, [])
+				return callback (err, [err])
 			}
 		
 			return callback ('', data)
@@ -396,7 +394,7 @@ export const isLivenessRunning: (callback: (err: string, data: string[]) => void
 	})
 }
 
-type listenState = 'referrer'|'system'|'conet'|'cntp'|'cntp-balance'
+type listenState = 'referrer'|'system'|'conet'|'cntp'|'cntp-balance'|'nodes'|'beforeunload'
 
 export const initOneTimeListenState = (listenState: listenState, dispatch: Dispatch<SetStateAction<any>>) => {
 	const channel = new BroadcastChannel(listenState)
@@ -407,8 +405,12 @@ export const initOneTimeListenState = (listenState: listenState, dispatch: Dispa
 
 export const initListenState = (listenState: listenState, dispatch: Dispatch<SetStateAction<any>>) => {
 	const channel = new BroadcastChannel(listenState)
-	const listen = (e: any) => {
-		dispatch(JSON.parse(e.data))
+	logger(`initListenState on ${listenState} `)
+	const listen = (e: MessageEvent<any>) => {
+		const data = JSON.parse(e.data)
+		// @ts-ignore
+		logger(`initListenState channel name [${e?.currentTarget?.name}] got [${data}]`)
+		dispatch(data)
 	}
 	channel.addEventListener('message', listen)
 }
@@ -460,4 +462,12 @@ export const getAllNodes:() => Promise < StartWorkerResolveForAPI > = () => new 
 	return postMessage (cmd, true, resolve)
 })
 
+export const getProfileBalance:() => Promise < StartWorkerResolveForAPI > = () => new Promise(resolve => {
+	const cmd: WorkerCommand = {
+		cmd: 'getCONETBalance',
+		uuid: v4(),
+		data: []
+	}
+	return postMessage (cmd, true, resolve)
+})
 
