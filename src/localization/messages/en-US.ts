@@ -353,8 +353,8 @@ const en_US: Messages = {
 	'platform.joinUS.miner.cloud.table.title1': 'Seed Node',
 	'platform.joinUS.miner.cloud.table.title2': 'Super Node',
 	'platform.joinUS.miner.cloud.table.item2': 'Ratio',
-	'platform.joinUS.miner.cloud.table.item2-seed': '6X',
-	'platform.joinUS.miner.cloud.table.item2-super': '12X',
+	'platform.joinUS.miner.cloud.table.item2-seed': 'Share 32.3% of total',
+	'platform.joinUS.miner.cloud.table.item2-super': 'Share 60.3% of total',
 	'platform.joinUS.miner.cloud.table.item1': 'Pre-sale Price',
 	'platform.joinUS.miner.cloud.table.item3': 'Limited Quantity',
 	'platform.joinUS.miner.cloud.table.item4': 'Operational Continuity',
@@ -365,6 +365,7 @@ const en_US: Messages = {
 	'platform.joinUS.miner.cloud.table.item7-2': '1 set',
 	'platform.joinUS.miner.cloud.table.item8': 'Special Offers',
 	'platform.joinUS.miner.cloud.table.item8-2': 'Participate in Mining Machine Profit Sharing;Exclusive Airdrop Rewards from the Blast L2.',
+	'platform.joinUS.miner.cloud.table.itemAvailable': 'Available',
 
 
     'platform.joinUS.joinMiner.button': 'Join Miner Now',
@@ -388,7 +389,7 @@ const en_US: Messages = {
 	'platform.api.daemon.switchAPP': 'Switch APP',
 
     'platform.miner.header.title': 'Welcome to CONET',
-	'platform.miner.header.title.detial': 'Why CONET needs your participation',
+	'platform.miner.header.title.detial': 'Your support is important to CoNET',
 	'platform.miner.header.title.smartContract': 'CNTP ERC20 Smart Contract ',
 
     'platform.miner.register.title': 'Node Provider',
@@ -411,7 +412,7 @@ const en_US: Messages = {
     'platform.miner.register.referrals': 'Referrals',
 	'platform.miner.register.referralsList': 'Referrals List',
 	'platform.miner.register.referralsEmpty': 'No Data',
-	'platform.miner.community.referral.detail': 'Get accelerated by referring participants',
+	'platform.miner.community.referral.detail': 'Spread the word and make CoNET famous!',
 	'platform.miner.community.referral.detail1': `Direct Referrals`,
 	'platform.miner.community.referral.detail1-1': `Direct Referrals: If someone joins mining using your Referrals Link, You will gets a 20% bonus of the referred person's earnings continuously.`,
 	'platform.miner.community.referral.detail2': `Secondary Referrals`,
@@ -422,10 +423,13 @@ const en_US: Messages = {
 	'platform.miner.community.liveness.title': 'Liveness',
 	'platform.miner.community.liveness.detail': 'Follow and be active online anytime, anywhere to get rewards',
 	'platform.miner.community.liveness.sameIPError': 'Error! Your IP address has been occupied, please try again later.',
+	'platform.miner.community.liveness.Timeout1': 'CONET Server response timeout error.',
+	'platform.miner.community.liveness.Timeout2': 'The server may presently busy now. Please try again late.',
 	'platform.miner.community.liveness.sameMinerError': 'Error! You are running another instance, please try again later.',
 	'platform.miner.community.liveness.referrer': 'Please enter your referrer wallet address',
 	'platform.miner.community.liveness.yourReferrer': 'Your referrer',
 	'platform.miner.community.liveness.registerReferrer': 'Register Referrer',
+	'platform.miner.community.liveness.chainDelayInfo': 'With the busy transactions on CONET Holesky, the CNTP you receive may be delayed by approximately 20 minutes.',
 
 	'platform.miner.nwteork.Slashing': 'CONET Sebolia Network is Upgrading. Please waiting for finish.',
 
@@ -434,9 +438,28 @@ const en_US: Messages = {
 	'platform.conet.explorer.nodes': 'CONET Nodes / Running Nodes',
 	'platform.conet.explorer.CNTP': 'CNTP Total Supply',
 	'platform.conet.explorer.CNTP.mint': 'Mined CNTP',
-	'platform.conet.explorer.CNTP.balance': 'Remainder CNTP',
-	'platform.conet.explorer.CNTP.relayNodes': 'CONET Network Relay Nodes'
+	'platform.conet.explorer.CNTP.balance': 'Remaining CNTP',
+	'platform.conet.explorer.CNTP.relayNodes': 'CONET Network Relay Nodes',
 
+	'platform.miner.cloudnode.orderButton': 'Order Cloud Node',
+
+	'platform.miner.cloudnode.orderInfo': 'Now on sale',
+
+	'platform.miner.cloudnode.orderForm.Title': 'CONET Cloud Node Order Form',
+	'platform.miner.cloudnode.orderForm.detail': 'The CONET Layer Minus network backbone nodes provide high-throughput network data forwarding for CONET users, ensuring uninterrupted exclusive rewards in CNTP cloud node incentives.',
+	'platform.miner.cloudnode.orderForm.pie.freeuser': 'Free user share percentage',
+	'platform.miner.cloudnode.orderForm.pie.seednode': 'Seed node share percentage',
+	'platform.miner.cloudnode.orderForm.pie.supernode': 'Super node share percentage',
+	'platform.miner.cloudnode.orderForm.walletAddr': 'Your Wallet Address(Please separate multiple addresses with commas)',
+	'platform.miner.cloudnode.orderForm.supernodeAmount': 'Super Node Amount',
+	'platform.miner.cloudnode.orderForm.seednodeAmount': 'Seed Node Amount',
+	'platform.miner.cloudnode.orderForm.tx': 'USDT Transfer receipt TX',
+	'platform.miner.cloudnode.orderForm.CONETWalletAddress': 'CONET Wallet Address (Ethereum): 0xF832ac957988150368714f7AF254C4108917bD18',
+	'platform.miner.cloudnode.orderForm.email': 'Your Email Address',
+	'platform.miner.cloudnode.orderForm.node': 'Node will be deployed within 24 hours after confirmation',
+	'platform.cantbeclose': 'CONET Platform is currently performing data write operations. To prevent data loss, please wait for a moment before exiting.',
+
+	'platform.button.error': 'Error!'
 
     
 }

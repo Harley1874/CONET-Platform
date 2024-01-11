@@ -11,6 +11,7 @@ type LogoTextProps = {
 type LogoImageProps = {
     size?: Sizes,
     color?: string
+	margin?: string
 } & LogoTextProps
 
 type StyledLogoTextProps = {
@@ -25,6 +26,7 @@ type StyledLogoSVGProps = {
 const StyledLogoContainer = styled.div`
 	&:not(:first-child) {
 		margin-left: 5px;
+		margin-top: 0.24rem;
 	}
 `
 

@@ -1,5 +1,5 @@
 import { CssVarsProvider, useColorScheme, extendTheme, styled, useTheme } from "@mui/material-next/styles"
-
+import { initListenState } from '../../../../API/index'
 import {HTMLAttributes, useState, useEffect, SyntheticEvent, ReactNode, useMemo, useRef} from "react"
 import Stack from "@mui/material/Stack"
 import {Tabs, Tab} from '@mui/material-next'
@@ -8,7 +8,7 @@ import type {SxProps, Theme, createTheme} from '@mui/material/'
 import Toolbar from '@mui/material/Toolbar'
 import IconButton from '@mui/material/IconButton'
 import {Locale} from "../../../../localization/types"
-import Menu from '@mui/material/Menu'
+import {Menu, DialogTitle, DialogContent, DialogContentText} from '@mui/material'
 import Box from '@mui/material/Box'
 import MenuItem from '@mui/material/MenuItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
@@ -33,6 +33,10 @@ import NodeExplorer from '../nodeExplorer/nodeExplorer'
 import ProfileDropdown from '../../../UI/Dropdowns/ProfileDropdown/ProfileDropdown'
 import Container from '@mui/material/Container'
 import store from '../../../../store/store'
+import CloudNode from '../CloudNode/CloudNode'
+import { useIntl } from "react-intl"
+
+
 interface StyledTabsProps {
     children?: React.ReactNode
     value?: number
@@ -145,12 +149,14 @@ const DashBoard = () => {
 		dAPPOpen
 		
     } = useAppState()
+	const intl = useIntl()
 
     const [menuValue, setMenuValue] = useState(0)
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement|Element>()
     const openMenu = Boolean(anchorEl)
     const { mode, setMode } = useColorScheme()
     const [showProfileDropdown, setShowProfileDropdown] = useState(false)
+
 
     const ShowApp = () => {
 		if (!hasContainer) {
@@ -183,6 +189,12 @@ const DashBoard = () => {
 					<Proxy />
 				)
                 
+			}
+
+			case 'cloudNode': {
+				return (
+					<CloudNode />
+				)
 			}
 
             default: {
@@ -427,7 +439,6 @@ const DashBoard = () => {
     }
 
     const AppStart = () => {
-
     
         return (
 			<StackContainer>

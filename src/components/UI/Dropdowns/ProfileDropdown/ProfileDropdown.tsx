@@ -234,7 +234,7 @@ const ProfileDropdown = ({closeDropdown}: ProfileDropdownProps) => {
 				icon: <LogoIcon size={30} color='grey'/>
 			},
 			{
-				primary: 'CNPT',
+				primary: 'CNTP',
 				balance: currentProfile().tokens.cntp.balance, 
 				icon: <LogoIcon size={30} color={green[200]}/>
 			}
@@ -292,20 +292,6 @@ const ProfileDropdown = ({closeDropdown}: ProfileDropdownProps) => {
 		})
 	}
 
-	const maxBuyCoNETCashClick = () => {
-		const assetList = reflashAssetList()
-		const USDCbalance = assetList[2].balance
-		let ret = USDCbalance - fees
-		setAmountTextFieldID('standard-basic')
-		if ( ret > 0) {
-			if ( ret > 100 ) {
-				ret = 100
-			}
-			return setAmountVal(ret)
-		}
-		return setAmountVal(0)
-	}
-
 	const checkAddress = (address: string) => {
 		if ( !workerService.method?.isAddress ) {
 			return 
@@ -341,18 +327,6 @@ const ProfileDropdown = ({closeDropdown}: ProfileDropdownProps) => {
 		return setAmountVal(0)
 	}
 
-	const maxCoNETClick = () => {
-		const assetList = reflashAssetList()
-		const balance = assetList[0].balance
-		const ret = balance - fees
-		setAmountTextFieldID('standard-basic')
-		if ( ret > 0) {
-			setAmountVal(ret)
-			return setReceiveVal ((ret*usdcPrice).toFixed(2))
-
-		}
-		return setAmountVal(0)
-	}
 
 	const historyItemClick = (index: number, v:CryptoAssetHistory) => {
 		// @ts-ignore: Unreachable code error

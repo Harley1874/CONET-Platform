@@ -389,7 +389,7 @@ const zh_CN: Messages = {
 
 	'platform.miner.header.title.detial': '為何CONET需要您的參與',
 	'platform.miner.header.title.smartContract': 'CNTP ERC20合約',
-	'platform.miner.community.referral.detail': '通過推薦參與者獲得加速',
+	'platform.miner.community.referral.detail': '透過推薦傳播獲得加速的獎勵',
 
     'platform.miner.register.title': '成為節點礦工',
     'platform.miner.register.button': '開始挖礦',
@@ -403,6 +403,7 @@ const zh_CN: Messages = {
     'platform.miner.register.MinerAni.claim': '轉帳獎勵到錢包',
     'platform.miner.register.totalRewards': '獲得總獎勵',
     'platform.miner.register.pendingRewards': '等待轉帳獎勵',
+	'platform.joinUS.miner.cloud.table.itemAvailable': '剩餘數量',
 
     'platform.miner.register.previouslyClaimed': '當前獎勵',
     'platform.miner.register.MinerAni.stop': '停止DePIN',
@@ -423,7 +424,10 @@ const zh_CN: Messages = {
 	'platform.miner.community.liveness.title': '活力',
 	'platform.miner.community.liveness.detail': '隨時隨地在線关注活躍即可获得奖励',
 	'platform.miner.community.liveness.sameIPError': '错误！ 您的IP地址已被占用，请稍后重试',
+	'platform.miner.community.liveness.Timeout1': 'CONET伺服器逾時',
+	'platform.miner.community.liveness.Timeout2': '目前可能處於繁忙階段，請稍後再試',
 	'platform.miner.community.liveness.sameMinerError': '错误！您正在运行另一个实例，请稍后再试',
+	'platform.miner.community.liveness.chainDelayInfo': '由於CONET Holesky链交易繁忙，您收到的CNTP可能會延遲約20分鐘',
 	'platform.miner.community.liveness.yourReferrer': '您的推薦人',
 	'platform.miner.community.liveness.referrer': '請輸入您的推薦人錢包地址',
 	'platform.miner.community.liveness.registerReferrer': '註冊推薦人',
@@ -434,7 +438,26 @@ const zh_CN: Messages = {
 	'platform.conet.explorer.CNTP': 'CNTP發行總量',
 	'platform.conet.explorer.CNTP.mint': '已開採',
 	'platform.conet.explorer.CNTP.balance': '剩餘CNTP',
-	'platform.conet.explorer.CNTP.relayNodes': 'CONET網路中繼節點'
+	'platform.conet.explorer.CNTP.relayNodes': 'CONET網路中繼節點',
+	'platform.miner.cloudnode.orderButton': '訂購雲節點',
+	'platform.miner.cloudnode.orderInfo': '正在開售中',
+
+	'platform.miner.cloudnode.orderForm.Title': 'CONET雲節點訂購表',
+	'platform.miner.cloudnode.orderForm.detail': 'CONET Layer Minus網路骨幹節點，提供CONET用戶高吞吐網路資料轉發，不間斷獨享CNTP雲節點獎勵份額',
+	'platform.miner.cloudnode.orderForm.pie.freeuser': '免費用戶共享百分比',
+	'platform.miner.cloudnode.orderForm.pie.seednode': '種子節點共享百分比',
+	'platform.miner.cloudnode.orderForm.pie.supernode': '超級節點共享百分比',
+	'platform.miner.cloudnode.orderForm.walletAddr': '您的錢包地址(多個地址請以逗號分隔)',
+	'platform.miner.cloudnode.orderForm.seednodeAmount': '訂購種子節點數',
+	'platform.miner.cloudnode.orderForm.supernodeAmount': '訂購超級節點數',
+	'platform.miner.cloudnode.orderForm.tx': 'USDT轉帳TX',
+	'platform.miner.cloudnode.orderForm.CONETWalletAddress': 'CONET錢包位址(以太坊): 0xF832ac957988150368714f7AF254C4108917bD18',
+	'platform.miner.cloudnode.orderForm.email': '您的Email',
+	'platform.miner.cloudnode.orderForm.node': '節點將在轉帳確認後24小時內部署',
+
+	'platform.cantbeclose': 'CONET平台客戶端正執行資料寫入，為防止資料遺失，請稍等片刻再退出',
+	'platform.button.error': '錯誤'
+
 
 }
 
