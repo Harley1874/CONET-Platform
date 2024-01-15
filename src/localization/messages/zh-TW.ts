@@ -417,6 +417,7 @@ const zh_CN: Messages = {
 	'platform.miner.community.referral.link': '您的推薦专用链接',
 	'platform.miner.nwteork.Slashing': 'CONET主鏈正執行升級，請等待完成！',
 
+
 	'platform.conet.cotp.Symbol': 'CNTP',
 	'platform.conet.cotp.name': 'CONET積分',
 
@@ -427,10 +428,13 @@ const zh_CN: Messages = {
 	'platform.miner.community.liveness.Timeout1': 'CONET伺服器逾時',
 	'platform.miner.community.liveness.Timeout2': '目前可能處於繁忙階段，請稍後再試',
 	'platform.miner.community.liveness.sameMinerError': '错误！您正在运行另一个实例，请稍后再试',
-	'platform.miner.community.liveness.chainDelayInfo': '由於CONET Holesky链交易繁忙，您收到的CNTP可能會延遲約20分鐘',
+	'platform.miner.community.liveness.chainDelayInfo': '由於CONET Holesky公链交易繁忙，您收到的CNTP可能會延遲約30分鐘',
 	'platform.miner.community.liveness.yourReferrer': '您的推薦人',
 	'platform.miner.community.liveness.referrer': '請輸入您的推薦人錢包地址',
 	'platform.miner.community.liveness.registerReferrer': '註冊推薦人',
+	'platform.miner.community.liveness.onlineMiners': '目前線上礦工數',
+	'platform.miner.community.liveness.rewordRate': 'CNTP速率',
+	'platform.miner.community.liveness.eachMin': ' CNTP/每秒',
 
 	'platform.conet.explorer.title': 'CONET 網路探索',
 	'platform.conet.explorer.lastBlock': '区块高度 / 帳戶總數',

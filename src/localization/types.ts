@@ -418,6 +418,9 @@ export type Messages = {
 	'platform.miner.community.liveness.Timeout1': string
 	'platform.miner.community.liveness.Timeout2': string
 	'platform.miner.community.liveness.sameMinerError': string
+	'platform.miner.community.liveness.onlineMiners': string
+	'platform.miner.community.liveness.rewordRate': string
+	'platform.miner.community.liveness.eachMin': string
 	'platform.miner.community.liveness.referrer': string
 	'platform.miner.community.liveness.chainDelayInfo': string
 

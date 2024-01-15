@@ -429,7 +429,10 @@ const en_US: Messages = {
 	'platform.miner.community.liveness.referrer': 'Please enter your referrer wallet address',
 	'platform.miner.community.liveness.yourReferrer': 'Your referrer',
 	'platform.miner.community.liveness.registerReferrer': 'Register Referrer',
-	'platform.miner.community.liveness.chainDelayInfo': 'With the busy transactions on CONET Holesky, the CNTP you receive may be delayed by approximately 20 minutes.',
+	'platform.miner.community.liveness.chainDelayInfo': 'With the busy transactions on CONET Holesky blockchain, the CNTP you receive may be delayed by approximately 30 minutes.',
+	'platform.miner.community.liveness.onlineMiners': 'Online Miners',
+	'platform.miner.community.liveness.rewordRate': 'Reword Rate',
+	'platform.miner.community.liveness.eachMin': ' CNTP/Per second',
 
 	'platform.miner.nwteork.Slashing': 'CONET Sebolia Network is Upgrading. Please waiting for finish.',
 

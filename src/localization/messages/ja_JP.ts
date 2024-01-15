@@ -414,7 +414,7 @@ const ja_JP: Messages = {
 	'platform.miner.community.liveness.sameIPError': 'エラー！IPアドレスが占有されています。後でもう一度お試しください',
 	'platform.miner.community.liveness.Timeout1': 'CONETサーバーの応答タイムアウト',
 	'platform.miner.community.liveness.Timeout2': '只今サーバーがビジー状態です。しばらくしてからもう一度お試しください',
-	'platform.miner.community.liveness.chainDelayInfo': 'CONET Holeskyでのトランザクションが混雑しているため、CNTPは正しく表示されるまで約20分遅れる可能性があります',
+	'platform.miner.community.liveness.chainDelayInfo': 'CONET Holesky Blockchainでのトランザクションが混雑しているため、CNTPは正しく表示されるまで約30分遅れる可能性があります',
 	'platform.miner.community.liveness.sameMinerError': 'エラー! 別のインスタンスを実行しています。後でもう一度試してください',
 	'platform.miner.community.referral.detail1': `直接推薦`,
 	'platform.miner.community.referral.detail1-1': `誰かがあなたの推薦リンクを使用してCONETに参加すると、あなたは紹介された人の収益の20%のボーナスを継続的に受け取ります。`,
@@ -424,6 +424,9 @@ const ja_JP: Messages = {
 	'platform.miner.community.liveness.yourReferrer': 'あなたの推薦者',
 	'platform.miner.community.liveness.referrer': '推薦者を入力してください',
 	'platform.miner.community.liveness.registerReferrer': 'リファラーを登録',
+	'platform.miner.community.liveness.onlineMiners': 'オンラインマイナー数',
+	'platform.miner.community.liveness.rewordRate': 'CNTP レート',
+	'platform.miner.community.liveness.eachMin': ' CNTP/毎秒',
 
 	'platform.conet.explorer.title': 'CONET エクスプローラー',
 	'platform.conet.explorer.lastBlock': 'ラストブロック/アカウント',
