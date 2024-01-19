@@ -423,7 +423,7 @@ const ja_JP: Messages = {
   'platform.miner.community.liveness.Timeout1': 'CONETサーバーの応答タイムアウト',
   'platform.miner.community.liveness.Timeout2': '只今サーバーがビジー状態です。しばらくしてからもう一度お試しください',
   'platform.miner.community.liveness.onInternet': 'インターネットに接続してください',
-
+  'platform.miner.community.liveness.disconnect': '接続が切断されました',
   'platform.miner.community.liveness.chainDelayInfo':
     'CONET Holesky Blockchainでのトランザクションが混雑しているため、CNTPは正しく表示されるまで約30分遅れる可能性があります',
   'platform.miner.community.liveness.sameMinerError': 'エラー! 別のインスタンスを実行しています。後でもう一度試してください',

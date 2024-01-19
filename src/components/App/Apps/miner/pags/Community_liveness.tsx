@@ -11,7 +11,7 @@ import miner2 from '../../../../../assets/miner/FancyNyan.webp'
 import minerPause from '../../../../../assets/miner/FancyNyanPause.png'
 import { Tabs, Tab, Button as ButtonNext, Divider } from '@mui/material-next'
 import ErrorIcon from '@mui/icons-material/Error'
-
+import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
 const ItemStyle3 = materialStyled(Paper)(() => ({
 	textAlign: 'center',
 	borderRadius: '1rem',
@@ -56,9 +56,9 @@ const Community_liveness = (CNTP: string, setCNTP: (v: string) => void, setToday
 	const [rateProgressColor, setRateProgressColor] = useState<'success' | 'warning' | 'error'>('success')
 	const [onlineCount, setOnlineCount] = useState(0)
 	const [onlineRate, setOnlineRate] = useState('')
-
+	const [disconnect, setDisconnect] = useState(false) // 连接被断开
 	// 没有网络，无法链接服务器
-	const [onInternet, setonInternet] = useState(false)
+	const [onInternet, setOnInternet] = useState(false)
 
 	const formatDat = (rateData: Ratedata) => {
 		let process = 0
@@ -91,6 +91,7 @@ const Community_liveness = (CNTP: string, setCNTP: (v: string) => void, setToday
 				return
 			}
 
+			// 开始挖矿
 			if (showLoader) {
 				if (minting) {
 					await stopLiveness()
@@ -119,7 +120,12 @@ const Community_liveness = (CNTP: string, setCNTP: (v: string) => void, setToday
 
 					// 没有网络，无法链接服务器
 					if (data[0] === 'NOINTERNET') {
-						return setonInternet(true)
+						return setOnInternet(true)
+					}
+
+					// 连接被断开
+					if (data[0] === 'DISCONNECT') {
+						return setDisconnect(true)
 					}
 
 					if (!minting) {
@@ -179,11 +185,12 @@ const Community_liveness = (CNTP: string, setCNTP: (v: string) => void, setToday
 		setShowTimeOutError(false)
 		setShowInstanceError(false)
 		setRegError(false)
-		setonInternet(false)
+		setOnInternet(false)
+		setDisconnect(false)
 	}
 
 	const clickStart = async () => {
-		if (showTimeOutError || showInstanceError) {
+		if (showTimeOutError || showInstanceError || regError || showSameIPError || onInternet || disconnect) {
 			return clearError()
 		}
 		setShowLoader(true)
@@ -197,11 +204,8 @@ const Community_liveness = (CNTP: string, setCNTP: (v: string) => void, setToday
 						<Typography variant="body1" sx={{ textAlign: 'center', color: grey[500] }}>
 							{intl.formatMessage({ id: 'platform.miner.community.liveness.detail' })}
 						</Typography>
-
 					</Stack>
-
 				}
-
 				{
 					regError &&
 					<Typography variant="body1" sx={{ textAlign: 'center', color: red[700], padding: '0 0 1rem 0' }}>
@@ -228,7 +232,7 @@ const Community_liveness = (CNTP: string, setCNTP: (v: string) => void, setToday
 				{
 					onInternet &&
 					<Typography variant="body1" sx={{ textAlign: 'center', color: red[700], padding: '0 0 1rem 0' }}>
-							{intl.formatMessage({ id: 'platform.miner.community.liveness.onInternet' })}
+						{intl.formatMessage({ id: 'platform.miner.community.liveness.onInternet' })}
 					</Typography>
 				}
 				{
@@ -254,7 +258,7 @@ const Community_liveness = (CNTP: string, setCNTP: (v: string) => void, setToday
 					</ColorButton>
 				}
 				{
-					!showTimeOutError && !showInstanceError && !showSameIPError && !regError &&
+					!showTimeOutError && !showInstanceError && !showSameIPError && !regError && !onInternet &&
 					<Stack spacing={1}>
 						{
 							rateProgress > 0 && minting &&
@@ -287,26 +291,36 @@ const Community_liveness = (CNTP: string, setCNTP: (v: string) => void, setToday
 							</Stack>
 
 						}
+						{
+							disconnect &&
+							<ColorButton variant="outlined" color="error" endIcon={<ReportGmailerrorredIcon color="error" />} onClick={clickStart} sx={{ borderRadius: '2rem' }}>
+								<Typography sx={{ fontStyle: "inherit", }}>
+									{intl.formatMessage({ id: 'platform.miner.community.liveness.disconnect' })}
+								</Typography>
+							</ColorButton>
+						}
+						{
+							!disconnect &&
+							<ButtonNext
+								onClick={clickStart}
+								variant="elevated"
+								color='primary'
+								disabled={showLoader}
+								sx={{ fontFamily: 'inherit', color: '#4caf50' }}
+							>
+								<Typography sx={{ padding: '0 0.2rem 0rem 0rem' }}>
 
-						<ButtonNext
-							onClick={clickStart}
-							variant="elevated"
-							color='primary'
-							disabled={showLoader}
-							sx={{ fontFamily: 'inherit', color: '#4caf50' }}
-						>
-							<Typography sx={{ padding: '0 0.2rem 0rem 0rem' }}>
+									{intl.formatMessage({ id: minting ? 'platform.miner.register.MinerAni.stop' : 'platform.miner.register.button' })}
+								</Typography>
 
-								{intl.formatMessage({ id: minting ? 'platform.miner.register.MinerAni.stop' : 'platform.miner.register.button' })}
-							</Typography>
+								{
+									showLoader && <CircularProgress size={20}
+										color="success"
+										variant="indeterminate" />
+								}
 
-							{
-								showLoader && <CircularProgress size={20}
-									color="success"
-									variant="indeterminate" />
-							}
-
-						</ButtonNext>
+							</ButtonNext>
+						}
 
 					</Stack>
 

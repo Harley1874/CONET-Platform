@@ -434,7 +434,8 @@ const en_US: Messages = {
   'platform.miner.community.liveness.Timeout1': 'CONET Server response timeout error.',
   'platform.miner.community.liveness.Timeout2': 'The server may presently busy now. Please try again late.',
   'platform.miner.community.liveness.onInternet': "Can't connect to the server because there is no network",
-
+  // 连接被断开
+  'platform.miner.community.liveness.disconnect': 'Connection disconnected',
   'platform.miner.community.liveness.sameMinerError': 'Error! You are running another instance, please try again later.',
   'platform.miner.community.liveness.referrer': 'Please enter your referrer wallet address',
   'platform.miner.community.liveness.yourReferrer': 'Your referrer',

@@ -1,4 +1,4 @@
-import {Messages} from '../types'
+import { Messages } from '../types';
 
 const zh_CN: Messages = {
   'platform.app.browser.search.placeholder': '請輸入檢索關鍵字或網站',
@@ -436,6 +436,7 @@ const zh_CN: Messages = {
   'platform.miner.community.liveness.Timeout1': 'CONET伺服器逾時',
   'platform.miner.community.liveness.Timeout2': '目前可能處於繁忙階段，請稍後再試',
   'platform.miner.community.liveness.onInternet': '當連結不上服務器，是由於沒有網絡',
+  'platform.miner.community.liveness.disconnect': '連結被斷開',
   'platform.miner.community.liveness.sameMinerError': '错误！您正在运行另一个实例，请稍后再试',
   'platform.miner.community.liveness.chainDelayInfo': '由於CONET Holesky公链交易繁忙，您收到的CNTP可能會延遲約30分鐘',
   'platform.miner.community.liveness.yourReferrer': '您的推薦人',
@@ -472,4 +473,4 @@ const zh_CN: Messages = {
   'platform.button.error': '錯誤',
 };
 
-export default zh_CN
+export default zh_CN;
