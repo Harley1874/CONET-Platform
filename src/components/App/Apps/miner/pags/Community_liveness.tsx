@@ -258,7 +258,7 @@ const Community_liveness = (CNTP: string, setCNTP: (v: string) => void, setToday
 					</ColorButton>
 				}
 				{
-					!showTimeOutError && !showInstanceError && !showSameIPError && !regError && !onInternet &&
+					!showTimeOutError && !showInstanceError && !showSameIPError && !regError &&
 					<Stack spacing={1}>
 						{
 							rateProgress > 0 && minting &&
