@@ -445,6 +445,7 @@ const zh_CN: Messages = {
   'platform.miner.community.liveness.onlineMiners': '目前線上礦工數',
   'platform.miner.community.liveness.rewordRate': 'CNTP速率',
   'platform.miner.community.liveness.eachMin': ' CNTP/每秒',
+  'platform.miner.community.liveness.ErrorButton': '錯誤發生！',
 
   'platform.conet.explorer.title': 'CONET 網路探索',
   'platform.conet.explorer.lastBlock': '区块高度 / 帳戶總數',

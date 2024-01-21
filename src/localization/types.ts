@@ -423,6 +423,7 @@ export type Messages = {
 	'platform.miner.community.liveness.eachMin': string
 	'platform.miner.community.liveness.referrer': string
 	'platform.miner.community.liveness.chainDelayInfo': string
+	'platform.miner.community.liveness.ErrorButton': string
 
 	'platform.miner.community.referral.detail': string
 	'platform.miner.community.referral.detail1': string
@@ -432,6 +433,9 @@ export type Messages = {
 	'platform.miner.community.referral.link': string
 	'platform.miner.community.liveness.yourReferrer': string
 	'platform.miner.community.liveness.registerReferrer': string
+
+	'platform.miner.community.liveness.onInternet': string
+	'platform.miner.community.liveness.disconnect': string
 
 	'platform.miner.nwteork.Slashing': string
 

@@ -11,7 +11,9 @@ import miner2 from '../../../../../assets/miner/FancyNyan.webp'
 import minerPause from '../../../../../assets/miner/FancyNyanPause.png'
 import { Tabs, Tab, Button as ButtonNext, Divider } from '@mui/material-next'
 import ErrorIcon from '@mui/icons-material/Error'
-import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
+import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred'
+import FancyNyanStoped from '../assets/FancyNyanStoped.png'
+
 const ItemStyle3 = materialStyled(Paper)(() => ({
 	textAlign: 'center',
 	borderRadius: '1rem',
@@ -61,6 +63,9 @@ const Community_liveness = (CNTP: string, setCNTP: (v: string) => void, setToday
 	const [onInternet, setOnInternet] = useState(false)
 
 	const formatDat = (rateData: Ratedata) => {
+		if (!rateData) {
+			return
+		}
 		let process = 0
 		if (rateData.online < 1000) {
 			process = (rateData.online / 1000) * 100
@@ -77,6 +82,7 @@ const Community_liveness = (CNTP: string, setCNTP: (v: string) => void, setToday
 			process = process > 90 ? 90 : process
 			setRateProgressColor('error')
 		}
+
 		setOnlineCount(rateData.online)
 		setRateProgress(process)
 		setRateProgressBuffer(process + Math.random() * 7)
@@ -84,6 +90,47 @@ const Community_liveness = (CNTP: string, setCNTP: (v: string) => void, setToday
 		setOnlineRate(cntpRate)
 	}
 
+	const precessCallback = (err: string, data: string[]) => {
+		if (showLoader) {
+			setShowLoader(false)
+		}
+		if (!data.length) {
+			return
+		}
+		if (data[0] === 'TIMEOUT') {
+			return setShowTimeOutError(true)
+		}
+		if (data[0] === 'sameInstance') {
+			return setShowInstanceError(true)
+		}
+
+		if (data[0] === 'SAMEIP') {
+			return setShowSameIPError(true)
+		}
+		if (data[0] === 'FAILURE') {
+			return setRegError(true)
+		}
+
+		// 没有网络，无法链接服务器
+		if (data[0] === 'NOINTERNET') {
+			return setOnInternet(true)
+		}
+
+		// 连接被断开
+		if (data[0] === 'DISCONNECT') {
+			setMinting(false)
+			return setDisconnect(true)
+		}
+
+		if (!minting) {
+			setMinting(true)
+		}
+		setCNTP(data[0])
+		setTodayCNTP(data[1])
+		//	@ts-ignore
+		const rateData: Ratedata = data[2]
+		formatDat(rateData)
+	}
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -100,45 +147,8 @@ const Community_liveness = (CNTP: string, setCNTP: (v: string) => void, setToday
 					return setMinting(false)
 				}
 
-				startLiveness((err, data) => {
-					if (showLoader) {
-						setShowLoader(false)
-					}
-					if (data[0] === 'TIMEOUT') {
-						return setShowTimeOutError(true)
-					}
-					if (data[0] === 'sameInstance') {
-						return setShowInstanceError(true)
-					}
 
-					if (data[0] === 'SAMEIP') {
-						return setShowSameIPError(true)
-					}
-					if (data[0] === 'FAILURE') {
-						return setRegError(true)
-					}
-
-					// 没有网络，无法链接服务器
-					if (data[0] === 'NOINTERNET') {
-						return setOnInternet(true)
-					}
-
-					// 连接被断开
-					if (data[0] === 'DISCONNECT') {
-						return setDisconnect(true)
-					}
-
-					if (!minting) {
-						setMinting(true)
-					}
-					setCNTP(data[0])
-					setTodayCNTP(data[1])
-					//	@ts-ignore
-					const rateData: Ratedata = data[2]
-					formatDat(rateData)
-
-				})
-
+				startLiveness(precessCallback)
 
 			}
 
@@ -158,20 +168,7 @@ const Community_liveness = (CNTP: string, setCNTP: (v: string) => void, setToday
 				return console.log(`minting is true return!`)
 			}
 
-			isLivenessRunning((err, data) => {
-				if (!data.length || err) {
-					return
-				}
-
-				if (!minting) {
-					setMinting(true)
-					setCNTP(data[0])
-					setTodayCNTP(data[1])
-					//	@ts-ignore
-					const rateData: Ratedata = data[2]
-					formatDat(rateData)
-				}
-			})
+			isLivenessRunning(precessCallback)
 		}
 
 		let active = true
@@ -199,7 +196,7 @@ const Community_liveness = (CNTP: string, setCNTP: (v: string) => void, setToday
 		<ItemStyle3>
 			<Stack justifyContent="center" alignItems="center" spacing={2}>
 				{
-					(!showTimeOutError && !showInstanceError && !showSameIPError) && !regError && !minting &&
+					(!showTimeOutError && !showInstanceError && !showSameIPError) && !regError && !minting && !onInternet && !disconnect &&
 					<Stack spacing={2}>
 						<Typography variant="body1" sx={{ textAlign: 'center', color: grey[500] }}>
 							{intl.formatMessage({ id: 'platform.miner.community.liveness.detail' })}
@@ -247,18 +244,18 @@ const Community_liveness = (CNTP: string, setCNTP: (v: string) => void, setToday
 				</Typography>
 
 				{
-					minting ? <img src={miner2} style={{ width: '5rem' }} /> : <img src={minerPause} style={{ width: '5rem' }} />
+					minting ? <img src={miner2} style={{ width: '5rem' }} /> : disconnect? <img src={FancyNyanStoped} style={{ width: '5rem' }} /> : <img src={minerPause} style={{ width: '5rem' }} />
 				}
 				{
-					(showTimeOutError || showInstanceError || showSameIPError || regError) &&
+					(showTimeOutError || showInstanceError || showSameIPError || regError|| onInternet ) &&
 					<ColorButton variant="outlined" color="error" endIcon={<ErrorIcon color="error" />} onClick={clickStart} sx={{ borderRadius: '2rem' }}>
 						<Typography sx={{ fontStyle: "inherit", }}>
-							{intl.formatMessage({ id: 'platform.miner.community.liveness.onlineMiners' })}
+							{intl.formatMessage({ id: 'platform.miner.community.liveness.ErrorButton' })}
 						</Typography>
 					</ColorButton>
 				}
 				{
-					!showTimeOutError && !showInstanceError && !showSameIPError && !regError &&
+					!showTimeOutError && !showInstanceError && !showSameIPError && !regError && !onInternet &&
 					<Stack spacing={1}>
 						{
 							rateProgress > 0 && minting &&

@@ -445,6 +445,7 @@ const en_US: Messages = {
   'platform.miner.community.liveness.onlineMiners': 'Online Miners',
   'platform.miner.community.liveness.rewordRate': 'Reword Rate',
   'platform.miner.community.liveness.eachMin': ' CNTP/Per second',
+  'platform.miner.community.liveness.ErrorButton': 'Error!',
 
   'platform.miner.nwteork.Slashing': 'CONET Sebolia Network is Upgrading. Please waiting for finish.',
 

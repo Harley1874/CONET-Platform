@@ -438,6 +438,7 @@ const ja_JP: Messages = {
   'platform.miner.community.liveness.onlineMiners': 'オンラインマイナー数',
   'platform.miner.community.liveness.rewordRate': 'CNTP レート',
   'platform.miner.community.liveness.eachMin': ' CNTP/毎秒',
+  'platform.miner.community.liveness.ErrorButton': 'エラーが発生しました',
 
   'platform.conet.explorer.title': 'CONET エクスプローラー',
   'platform.conet.explorer.lastBlock': 'ラストブロック/アカウント',
