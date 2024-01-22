@@ -152,8 +152,6 @@ const DashBoard = () => {
 	const intl = useIntl()
 
     const [menuValue, setMenuValue] = useState(0)
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement|Element>()
-    const openMenu = Boolean(anchorEl)
     const { mode, setMode } = useColorScheme()
     const [showProfileDropdown, setShowProfileDropdown] = useState(false)
 
@@ -208,7 +206,9 @@ const DashBoard = () => {
 
     const MenuSideBar = () => {
 
-    
+        const [anchorEl, setAnchorEl] = useState<null | HTMLElement|Element>()
+        const openMenu = Boolean(anchorEl)
+
         const animeCONET = () => {
             return (
                 <LogoImage size={40} color={mode === 'light' ? '#48473a': '#e5e2d9'}/>
@@ -326,10 +326,9 @@ const DashBoard = () => {
             )
         }
 
-        const languageMenuClick = (e:React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-            const kk = e.currentTarget.children[0]
+        const languageMenuClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+            const kk = e.currentTarget
             setAnchorEl(kk)
-                            
         }
       
     
@@ -341,15 +340,12 @@ const DashBoard = () => {
                     keepMounted
                     open={openMenu}
                     anchorEl={anchorEl}
-                    anchorOrigin={{
-                        vertical: 'top',
-                        horizontal: 'right',
-                    }}
                     onClick={() => setAnchorEl(null)}
                     transformOrigin={{
                         vertical: 'top',
                         horizontal: 'right',
                     }}
+                    onClose={() => setAnchorEl(null)}
                 >
                     {actions.map(action => (
                                 
@@ -388,13 +384,15 @@ const DashBoard = () => {
 							<StyledTab {...a11yProps(2)} icon={<SvgIcon component={HubIcon} inheritViewBox sx={{ fontSize: 30 }}/>} sx={{paddingBottom: '2rem'}}/>
                         </>
                     }
-    
-                    {/* <Box {...a11yProps(2)} 
-                        onClick={languageMenuClick}
+                    
+                    <Box
+                        {...a11yProps(2)} 
                     >
-                        <Tab icon={showLocationIcon(locale)} sx={{ position: 'fixed', bottom: '10rem'}} />
-                        <LanguageMenu />
-                    </Box> */}
+                        <div style={{position: 'fixed',bottom: '10rem'}} onClick={languageMenuClick}>
+                            <Tab icon={showLocationIcon(locale)}  />
+                            <LanguageMenu />
+                        </div>
+                    </Box>
 
     
                     <Box {...a11yProps(3)} onClick={
