@@ -1,4 +1,4 @@
-import {Messages} from '../types'
+import { Messages } from '../types';
 
 const en_US: Messages = {
   'platform.app.browser.search.placeholder': 'Search or entry website name',
@@ -317,6 +317,13 @@ const en_US: Messages = {
   'platform.proxy.FeatureArea.start': 'Ready To Start',
   'platform.proxy.step1.title': 'Free User',
   'platform.proxy.subscription.user': 'Subscription',
+
+  // 选择国家
+  'platform.proxy.featureArea8Item.selectCountry': 'Select Country',
+  'platform.proxy.featureArea8Item.randomCountry': 'Privacy values random countries', // 隱私重視隨機國家
+  'platform.proxy.featureArea8Item.random': 'random',
+  'platform.proxy.featureArea8Item.optionalCountry': 'Optional countries',
+
   'platform.proxy.featureArea8Item.step1': 'Step 1 Wallet recharge',
   'platform.proxy.featureArea8Item.step1.CONETbalance': 'CONET balance',
   'platform.proxy.featureArea8Item.step1.transferQuote': 'Billed by traffic, 1MB/1$CONET',
@@ -479,4 +486,4 @@ const en_US: Messages = {
   'platform.button.error': 'Error!',
 };
 
-export default en_US
+export default en_US;
