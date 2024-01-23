@@ -293,6 +293,13 @@ const ja_JP: Messages = {
   'platform.proxy.FeatureArea.start': '使い始め',
   'platform.proxy.step1.title': '無料ユーザー',
   'platform.proxy.subscription.user': '購読者',
+
+  // 选择国家
+  'platform.proxy.featureArea8Item.selectCountry': '国を選択してください',
+  'platform.proxy.featureArea8Item.randomCountry': 'プライバシーはランダムな国に焦点を当てる', // 隱私重視隨機國家
+  'platform.proxy.featureArea8Item.random': 'ランダム',
+  'platform.proxy.featureArea8Item.optionalCountry': 'オプションの国',
+
   'platform.proxy.featureArea8Item.step1': 'ステップ 1: アカウントにチャージする',
   'platform.proxy.featureArea8Item.step1.CONETbalance': 'CONETバランス',
   'platform.proxy.featureArea8Item.step1.transferQuote': 'お見積 1MB/1$CONET',

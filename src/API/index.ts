@@ -403,7 +403,15 @@ export const initOneTimeListenState = (listenState: listenState, dispatch: Dispa
 	})
 }
 
+const workerList = []
 export const initListenState = (listenState: listenState, dispatch: Dispatch<SetStateAction<any>>) => {
+    // 判断当前是否有监听，如果已经有监听,则关闭之前的监听，重新初始化
+    if (workerList.some(item => item.key === listenState)) { 
+        const oldWorker = workerList.find(item => item.key === listenState)
+        oldWorker.channel.removeEventListener('message', oldWorker.listen) // 移除监听触发的事件
+        oldWorker.channel.close() // 关闭channel
+        workerList.splice(workerList.findIndex(item => item.key === listenState), 1)
+    }
 	const channel = new BroadcastChannel(listenState)
 	logger(`initListenState on ${listenState} `)
 	const listen = (e: MessageEvent<any>) => {
@@ -412,7 +420,8 @@ export const initListenState = (listenState: listenState, dispatch: Dispatch<Set
 		logger(`initListenState channel name [${e?.currentTarget?.name}] got [${data}]`)
 		dispatch(data)
 	}
-	channel.addEventListener('message', listen)
+    channel.addEventListener('message', listen)
+    workerList.push({ key: listenState, channel, listen })
 }
 
 export const registerReferrer:(referrerAddr: string) => Promise < StartWorkerResolveForAPI > = (referrerAddr) => new Promise(resolve=>{
