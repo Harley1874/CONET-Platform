@@ -394,6 +394,13 @@ const zh_CN: Messages = {
   'platform.miner.register.boost': '加码',
   'platform.miner.register.boost.detail': '锁定 ? $COENT 90天',
 
+  // 排名表
+  'platform.miner.register.rank.title': '排名',
+  'platform.miner.register.rank.table.title1': '排名',
+  'platform.miner.register.rank.table.walletAddr': '钱包地址',
+  'platform.miner.register.rank.table.points': '点数',
+
+
   'platform.miner.register.MinerAni.reward': '当前获得的奖励',
   'platform.miner.register.MinerAni.pause': '暂停',
   'platform.miner.register.MinerAni.resume': '开始',

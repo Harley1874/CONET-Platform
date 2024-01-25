@@ -410,6 +410,12 @@ const zh_CN: Messages = {
   'platform.miner.register.boost': '加碼 ',
   'platform.miner.register.boost.detail': '鎖定 ? $COENT 90天',
 
+  // 排名表
+  'platform.miner.register.rank.title': '排名',
+  'platform.miner.register.rank.table.title1': '排名',
+  'platform.miner.register.rank.table.walletAddr': '錢包地址',
+  'platform.miner.register.rank.table.points': '點數',
+
   'platform.miner.register.MinerAni.reward': '當前獲得的獎勵',
   'platform.miner.register.MinerAni.pause': '暫停',
   'platform.miner.register.MinerAni.resume': '開始',

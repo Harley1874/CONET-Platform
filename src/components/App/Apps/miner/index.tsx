@@ -21,6 +21,8 @@ import DashBoardpanel from './pags/DashBoardpanel'
 import BoostTabPanel from './pags/BoostTabPanel'
 import NodeProvider from './pags/NodeProvider'
 import Community from './pags/Community'
+import Ranking_table from "./pags/Ranking_table"
+import { lightGreen } from '@mui/material/colors'
 const StyleDiv = styledCom.div`
 `
 
@@ -137,6 +139,13 @@ const Miner = () => {
 				</Grid>
 			}
 
+
+			<Grid item md={12} sm={8} xs={4} sx={{ textAlign: 'center', width: '100%', cursor: 'pointer', marginTop: '2rem' }}>
+				<Typography variant="h6" sx={{ fontWeight: '700', textAlign: 'center', color: lightGreen[400] }}>
+					{intl.formatMessage({ id: 'platform.miner.register.rank.title' })}
+				</Typography>
+				<Ranking_table></Ranking_table>
+			</Grid>
 		</Grid>
 
 	)
