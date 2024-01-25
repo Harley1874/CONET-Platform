@@ -264,6 +264,7 @@ const FeatureArea8ItemNew = () => {
 		isProxyStart,
 		setIsProxyStart
 	} = useAppState()
+
 	const currentProfile = () => {
 		const workerService = getWorkerService()
 		if (workerService.data.passcode.status === 'LOCKED') {
@@ -275,6 +276,7 @@ const FeatureArea8ItemNew = () => {
 
 		return workerService.data.profiles[index]
 	}
+
 	const profile = currentProfile()
 	const [CONET_Balance, setCONET_Balance] = useState(profile.tokens.conet.balance)
 	const [value, setValue] = React.useState(0)
@@ -325,10 +327,8 @@ const FeatureArea8ItemNew = () => {
 						return [...prev, curr.country]
 					}
 				}, [])
-				setRegions(regions)
+				return setRegions(regions)
 			}
-
-
 
 			return () => {
 				active = false
@@ -340,8 +340,6 @@ const FeatureArea8ItemNew = () => {
 		fetchData()
 		return () => { active = false }
 	}, [])
-
-
 
 	const _startProxy = async () => {
 		if (!isProxyStart) {
@@ -355,7 +353,6 @@ const FeatureArea8ItemNew = () => {
 		}
 
 	}
-
 
 	const handleChange = (event: React.SyntheticEvent, newValue: number) => {
 		const old = value
@@ -402,12 +399,10 @@ const FeatureArea8ItemNew = () => {
 
 	const intl = useIntl()
 
-
-
 	const changeRegion = (event: SelectChangeEvent) => {
 		const _region = event.target.value as string
 		setRegion(_region) // 设置用户选择的地区
-	};
+	}
 
 
 	const GetFaucet = () => {
@@ -416,7 +411,7 @@ const FeatureArea8ItemNew = () => {
 
 				<Grid item xs={12} sx={{ textAlign: 'center', width: '100%' }}>
 					{/* 选择国家或地区 */}
-					<FormControl sx={{ m: 1, minWidth: 180 }}>
+					<FormControl size='medium' fullWidth variant="standard" sx={{ m: 1}}>
 						<InputLabel>{intl.formatMessage({ id: 'platform.proxy.featureArea8Item.selectCountry' })}</InputLabel>
 						<Select
 							value={region}
@@ -595,6 +590,9 @@ const LaunchPage = () => {
 
 
 		const fetchData = async () => {
+			if (!active) {
+				return
+			}
 
 			const test = await testLocalServer()
 

@@ -236,12 +236,17 @@ const DashBoard = () => {
 						return store.dispatch(setDAPPOpen('proxy'))
 						
 					}
-					default: {
+
+					case 2: {
 						setMenuValue(newValue)
 						if (dAPPOpen==='nodes') {
 							return
 						}
 						return store.dispatch(setDAPPOpen('nodes'))
+					}
+
+					default: {
+						return
 					}
 				}
                 

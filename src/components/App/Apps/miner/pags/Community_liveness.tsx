@@ -61,7 +61,15 @@ const Community_liveness = (CNTP: string, setCNTP: (v: string) => void, setToday
 	const [disconnect, setDisconnect] = useState(false) // 连接被断开
 	// 没有网络，无法链接服务器
 	const [onInternet, setOnInternet] = useState(false)
+	const clearError = () => {
 
+		setShowSameIPError(false)
+		setShowTimeOutError(false)
+		setShowInstanceError(false)
+		setRegError(false)
+		setOnInternet(false)
+		setDisconnect(false)
+	}
 	const formatDat = (rateData: Ratedata) => {
 		if (!rateData) {
 			return
@@ -91,6 +99,7 @@ const Community_liveness = (CNTP: string, setCNTP: (v: string) => void, setToday
 	}
 
 	const precessCallback = (err: string, data: string[]) => {
+		clearError()
 		if (showLoader) {
 			setShowLoader(false)
 		}
@@ -176,15 +185,7 @@ const Community_liveness = (CNTP: string, setCNTP: (v: string) => void, setToday
 		return () => { active = false }
 	}, [minting])
 
-	const clearError = () => {
 
-		setShowSameIPError(false)
-		setShowTimeOutError(false)
-		setShowInstanceError(false)
-		setRegError(false)
-		setOnInternet(false)
-		setDisconnect(false)
-	}
 
 	const clickStart = async () => {
 		if (showTimeOutError || showInstanceError || regError || showSameIPError || onInternet || disconnect) {

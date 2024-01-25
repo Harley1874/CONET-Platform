@@ -275,12 +275,12 @@ export const setRegion: (region: regionType) => Promise < StartWorkerResolveForA
     })
 }
 
-export const startProxy: () => Promise < StartWorkerResolveForAPI > = () => {
+export const startProxy: (region?: string) => Promise < StartWorkerResolveForAPI > = (region) => {
     return new Promise( resolve => {
         const cmd: WorkerCommand = {
             cmd: 'startProxy',
             uuid: v4(),
-            data: []
+            data: [region]
         }
         return postMessage (cmd, true, resolve)
     })
@@ -403,7 +403,8 @@ export const initOneTimeListenState = (listenState: listenState, dispatch: Dispa
 	})
 }
 
-const workerList = []
+const workerList: any[] = []
+
 export const initListenState = (listenState: listenState, dispatch: Dispatch<SetStateAction<any>>) => {
     // 判断当前是否有监听，如果已经有监听,则关闭之前的监听，重新初始化
     if (workerList.some(item => item.key === listenState)) { 

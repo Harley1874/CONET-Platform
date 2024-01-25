@@ -7,7 +7,7 @@ import { styled } from '@mui/material/styles'
 import Paper from '@mui/material/Paper'
 import Grow from '@mui/material/Grow'
 import Slide from '@mui/material/Slide'
-import Box from '@mui/material/Box'
+import {Box, Container, Stack} from '@mui/material'
 import featurePicture4 from './assets/images/feature4.webp'
 import featureIcon1 from './assets/images/p.png'
 import featureIcon2 from './assets/images/fullogo.png'
@@ -400,7 +400,11 @@ const ItemContainer = styled(Box)(({ theme }) => ({
     maxHeight: '100%'
     
 }))
-
+const StackContainer = styled(Stack)(() => ({
+    height: '100vh',
+    width: '100%',
+	backgroundColor: 'black'
+}))
 
 
 const FeatureArea6 = () => {
@@ -464,9 +468,7 @@ const LaunchPage = () => {
                             </Grow>
     
                             <ColorButton onClick={() => {
-                                setShowGuide(false)
-                                setShowJoinUS(true)
-    
+                                window.open('https://test.conet.network', '_blank')
                             }}>
                                 <Typography variant="h4" sx={{color: grey[800], fontWeight: '500', textTransform: 'uppercase'}}>
                                     {intl.formatMessage({id: 'launchPage.HeaderArea.button'})}
@@ -506,16 +508,19 @@ const LaunchPage = () => {
     
     return (
         <ThemeProvider theme={themeTopArea1} >
-            <ItemContainer sx={{ overflowY: 'scroll', backgroundColor: 'black'}}>
-                <HeaderArea /> 
-                <FeatureArea1 />
-                <FeatureArea2 />
-                <FeatureArea3 />
-                <FeatureArea4 />
-                <FeatureArea5 />
-                <FeatureArea9 />
-                <FeatureArea6 />
-            </ItemContainer>
+			<StackContainer>
+			<Container maxWidth='lg' sx={{height: '100%', width: '100%', overflowX: 'auto'}}>
+					<HeaderArea /> 
+					<FeatureArea1 />
+					<FeatureArea2 />
+					<FeatureArea3 />
+					<FeatureArea4 />
+					<FeatureArea5 />
+					<FeatureArea9 />
+					<FeatureArea6 />
+				</Container>
+			</StackContainer>
+            
 
 
         </ThemeProvider>
