@@ -413,6 +413,12 @@ const en_US: Messages = {
   'platform.miner.register.boost': 'Boost',
   'platform.miner.register.boost.detail': 'Staking ? $CONET with 90 days locked',
 
+  // 排名表
+  'platform.miner.register.rank.title': 'ranking',
+  'platform.miner.register.rank.table.title1': 'ranking',
+  'platform.miner.register.rank.table.walletAddr': 'Wallet address',
+  'platform.miner.register.rank.table.points': 'POINTS',
+
   'platform.miner.register.MinerAni.reward': 'Rewards currently received',
   'platform.miner.register.MinerAni.pause': 'Pause',
   'platform.miner.register.MinerAni.resume': 'Start',

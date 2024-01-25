@@ -407,6 +407,12 @@ const ja_JP: Messages = {
   'platform.miner.register.boost': 'ブースト',
   'platform.miner.register.boost.detail': '180日 ? $COENTをロックします',
 
+  // 排名表
+  'platform.miner.register.rank.title': 'ランキング',
+  'platform.miner.register.rank.table.title1': 'ランキング',
+  'platform.miner.register.rank.table.walletAddr': 'ウォレットアドレス',
+  'platform.miner.register.rank.table.points': 'ポイント',
+
   'platform.miner.register.MinerAni.reward': '只今受け取っているReward',
   'platform.miner.register.MinerAni.pause': 'マイニングを暫停',
   'platform.miner.register.MinerAni.resume': 'スタート',

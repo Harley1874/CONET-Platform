@@ -444,8 +444,8 @@ const DashBoard = () => {
     const AppStart = () => {
     
         return (
-			<StackContainer>
-				<Container maxWidth='lg' sx={{height: '100%', width: '100%', overflowX: 'auto'}}>
+			<StackContainer sx={{overflowY:'auto'}}>
+                <Container maxWidth='lg' className="container" sx={{ margin: 'auto', minWidth: '300px' }}>
 					{
 						!isInitializing &&
 						<Stack sx={{width: '100%', height: '100%', paddingTop: {xs: '5rem'}}} alignItems="center">

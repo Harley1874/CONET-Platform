@@ -385,6 +385,12 @@ export type Messages = {
   'platform.miner.header.title.smartContract': string;
   'platform.miner.register.title': string;
 
+  // 排名表
+  'platform.miner.register.rank.title': string;
+  'platform.miner.register.rank.table.title1': string;
+  'platform.miner.register.rank.table.walletAddr': string;
+  'platform.miner.register.rank.table.points': string;
+
   'platform.miner.register.button': string;
   'platform.miner.register.boost': string;
   'platform.miner.register.boost.detail': string;
