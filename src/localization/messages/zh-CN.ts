@@ -306,7 +306,6 @@ const zh_CN: Messages = {
   'platform.proxy.featureArea8Item.randomCountry': '隐私重视随机国家',
   'platform.proxy.featureArea8Item.random': '随机',
   'platform.proxy.featureArea8Item.optionalCountry': '可选国家',
-  // 重新加载
   'platform.proxy.featureArea8Item.refresh': '重新加载',
 
   'platform.proxy.featureArea8Item.step1': '第一步：帐户充值',

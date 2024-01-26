@@ -438,7 +438,6 @@ const FeatureArea8ItemNew = () => {
 						getRegiestNodesStatus === 'ERROR' &&
 						<Button size="large" variant="outlined" onClick={getNodesList} sx={{ fontFamily: 'inherit', width: '10rem' }}>
 							{intl.formatMessage({ id: 'platform.proxy.featureArea8Item.refresh' })}
-							{getRegiestNodesStatus}
 						</Button>
 					}
 					{
