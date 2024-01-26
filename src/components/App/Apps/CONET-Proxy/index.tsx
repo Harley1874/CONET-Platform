@@ -571,31 +571,34 @@ const FeatureArea8ItemNew = () => {
 					}
 				</Stack>
 			</Grid>
-			<Grid item sx={{ textAlign: 'center', width: '100%' }}>
-				<Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: '3rem' }}>
-					<Tabs value={value} onChange={handleChange}
-						variant="scrollable"
-						scrollButtons
-						allowScrollButtonsMobile>
-						<Tab label={intl.formatMessage({ id: 'platform.proxy.step1.title' })} {...a11yProps(0)} />
-						<Tab label={intl.formatMessage({ id: 'platform.proxy.subscription.user' })} {...a11yProps(1)} />
-					</Tabs>
-				</Box>
-				<CustomTabPanel value={value} index={0}>
-					<Slide direction={animei} in={value === 0} mountOnEnter unmountOnExit>
-						{GetFaucet()}
-					</Slide>
+			{
+				// 未开启代理的情况下, 显示开启代理的UI
+				!isProxyStart &&
+				<Grid item sx={{ textAlign: 'center', width: '100%' }}>
+					<Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: '3rem' }}>
+						<Tabs value={value} onChange={handleChange}
+							variant="scrollable"
+							scrollButtons
+							allowScrollButtonsMobile>
+							<Tab label={intl.formatMessage({ id: 'platform.proxy.step1.title' })} {...a11yProps(0)} />
+							<Tab label={intl.formatMessage({ id: 'platform.proxy.subscription.user' })} {...a11yProps(1)} />
+						</Tabs>
+					</Box>
+					<CustomTabPanel value={value} index={0}>
+						<Slide direction={animei} in={value === 0} mountOnEnter unmountOnExit>
+							{GetFaucet()}
+						</Slide>
 
-				</CustomTabPanel>
-				<CustomTabPanel value={value} index={1}>
-					<Slide direction={animei} in={value === 1} mountOnEnter unmountOnExit>
-						<Typography variant="h5" sx={{ fontWeight: '900', textAlign: 'center', paddingTop: '2rem', textTransform: 'uppercase' }}>
-							{intl.formatMessage({ id: 'platform.joinUS.forDeveloper.button' })}
-						</Typography>
-					</Slide>
-				</CustomTabPanel>
-
-			</Grid>
+					</CustomTabPanel>
+					<CustomTabPanel value={value} index={1}>
+						<Slide direction={animei} in={value === 1} mountOnEnter unmountOnExit>
+							<Typography variant="h5" sx={{ fontWeight: '900', textAlign: 'center', paddingTop: '2rem', textTransform: 'uppercase' }}>
+								{intl.formatMessage({ id: 'platform.joinUS.forDeveloper.button' })}
+							</Typography>
+						</Slide>
+					</CustomTabPanel>
+				</Grid>
+			}
 		</Grid>
 	)
 }
