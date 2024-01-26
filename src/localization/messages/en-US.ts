@@ -323,6 +323,7 @@ const en_US: Messages = {
   'platform.proxy.featureArea8Item.randomCountry': 'Privacy values random countries', // 隱私重視隨機國家
   'platform.proxy.featureArea8Item.random': 'random',
   'platform.proxy.featureArea8Item.optionalCountry': 'Optional countries',
+  'platform.proxy.featureArea8Item.refresh': 'Refresh',
 
   'platform.proxy.featureArea8Item.step1': 'Step 1 Wallet recharge',
   'platform.proxy.featureArea8Item.step1.CONETbalance': 'CONET balance',

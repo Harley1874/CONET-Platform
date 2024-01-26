@@ -298,6 +298,7 @@ export type Messages = {
   'platform.proxy.featureArea8Item.randomCountry': string;
   'platform.proxy.featureArea8Item.random': string;
   'platform.proxy.featureArea8Item.optionalCountry': string;
+  'platform.proxy.featureArea8Item.refresh': string;
 
   'platform.proxy.featureArea8Item.step1': string;
   'platform.proxy.featureArea8Item.step1.CONETbalance': string;

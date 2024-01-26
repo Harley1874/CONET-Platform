@@ -321,6 +321,9 @@ const zh_CN: Messages = {
   'platform.proxy.featureArea8Item.randomCountry': '隱私重視隨機國家',
   'platform.proxy.featureArea8Item.random': '隨機',
   'platform.proxy.featureArea8Item.optionalCountry': '可選國家',
+  'platform.proxy.featureArea8Item.refresh': '重新加載',
+
+
   'platform.proxy.featureArea8Item.step1': '第一步：帳戶充值',
   'platform.proxy.featureArea8Item.step1.CONETbalance': 'CONET餘額',
   'platform.proxy.featureArea8Item.step1.transferQuote': '計費 1MB/1$CONET',
