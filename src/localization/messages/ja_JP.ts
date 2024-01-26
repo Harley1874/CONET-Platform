@@ -299,6 +299,7 @@ const ja_JP: Messages = {
   'platform.proxy.featureArea8Item.randomCountry': 'プライバシーはランダムな国に焦点を当てる', // 隱私重視隨機國家
   'platform.proxy.featureArea8Item.random': 'ランダム',
   'platform.proxy.featureArea8Item.optionalCountry': 'オプションの国',
+  'platform.proxy.featureArea8Item.refresh': 'リフレッシュ',
 
   'platform.proxy.featureArea8Item.step1': 'ステップ 1: アカウントにチャージする',
   'platform.proxy.featureArea8Item.step1.CONETbalance': 'CONETバランス',

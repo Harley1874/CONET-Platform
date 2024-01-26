@@ -294,7 +294,35 @@ const FeatureArea8ItemNew = () => {
 	const [regions, setRegions] = useState<string[]>([]) // 地区
 	const [region, setRegion] = useState<string>('none') // 用户选择的地区
 
-	const showStartProxy = () => (parseFloat(CONET_Balance) > 0 || nodes.length > 0) && !isProxyStart
+	// 获取节点的API状态
+	const [getRegiestNodesStatus, setGetRegiestNodesStatus] = useState<'SUCCESS' | 'ERROR' | 'LOADING' | ''>('') // 成功/失败/加载中/未开始
+
+	const showStartProxy = () => (parseFloat(CONET_Balance) > 0 || nodes.length > 0) && !isProxyStart && getRegiestNodesStatus === 'SUCCESS'
+
+	const getNodesList = async () => {
+		setGetRegiestNodesStatus('LOADING') // 开始加载
+		const [succes, nodes] = await getAllNodes().catch(err => {
+			setGetRegiestNodesStatus('ERROR') // 加载失败
+		})
+		if (succes === 'SUCCESS') {
+			setGetRegiestNodesStatus('SUCCESS') // 加载成功
+			const k = nodes[0].node
+			setNodes(k)
+			const regions = k.reduce((prev: string[], curr: any) => {
+				// 如果当前元素没有country，或country已经存在于prev中，则跳过，否则把当前元素添加到prev中
+				if (!curr.country || prev.includes(curr.country)) {
+					return prev
+				} else {
+					return [...prev, curr.country]
+				}
+			}, [])
+			setRegions(regions)
+		} else {
+			setGetRegiestNodesStatus('ERROR') // 加载失败
+		}
+		Promise.resolve()
+		return
+	}
 
 	useEffect(() => {
 
@@ -315,20 +343,7 @@ const FeatureArea8ItemNew = () => {
 				setCONET_Balance(data.CONET_Balance)
 			})
 			await scanAssets()
-			const [succes, nodes] = await getAllNodes()
-			if (succes === 'SUCCESS') {
-				const k = nodes[0].node
-				setNodes(k)
-				const regions = k.reduce((prev: string[], curr: any) => {
-					// 如果当前元素没有country，或country已经存在于prev中，则跳过，否则把当前元素添加到prev中
-					if (!curr.country || prev.includes(curr.country)) {
-						return prev
-					} else {
-						return [...prev, curr.country]
-					}
-				}, [])
-				return setRegions(regions)
-			}
+			await getNodesList()
 
 			return () => {
 				active = false
@@ -411,21 +426,39 @@ const FeatureArea8ItemNew = () => {
 
 				<Grid item xs={12} sx={{ textAlign: 'center', width: '100%' }}>
 					{/* 选择国家或地区 */}
-					<FormControl size='medium' fullWidth variant="standard" sx={{ m: 1}}>
-						<InputLabel>{intl.formatMessage({ id: 'platform.proxy.featureArea8Item.selectCountry' })}</InputLabel>
-						<Select
-							value={region}
-							label="region"
-							onChange={changeRegion}
-						>
-							<ListSubheader>{intl.formatMessage({ id: 'platform.proxy.featureArea8Item.randomCountry' })}</ListSubheader>
-							<MenuItem value={'none'}>{intl.formatMessage({ id: 'platform.proxy.featureArea8Item.random' })}</MenuItem>
-							<ListSubheader>{intl.formatMessage({ id: 'platform.proxy.featureArea8Item.optionalCountry' })}</ListSubheader>
-							{regions.map((n, i) => {
-								return <MenuItem key={i} value={n}>{n}</MenuItem>
-							})}
-						</Select>
-					</FormControl>
+					{
+						// 加载中
+						getRegiestNodesStatus === 'LOADING' &&
+						<Box sx={{ display: 'block', textAlign: 'center', width: '100%' }}>
+							<CircularProgress color='success' disableShrink />
+						</Box>
+					}
+					{
+						// 加载失败
+						getRegiestNodesStatus === 'ERROR' &&
+						<Button size="large" variant="outlined" onClick={getNodesList} sx={{ fontFamily: 'inherit', width: '10rem' }}>
+							{intl.formatMessage({ id: 'platform.proxy.featureArea8Item.refresh' })}
+						</Button>
+					}
+					{
+						// 加载成功
+						getRegiestNodesStatus === 'SUCCESS' &&
+						<FormControl size='medium' fullWidth variant="standard" sx={{ m: 1 }}>
+							<InputLabel>{intl.formatMessage({ id: 'platform.proxy.featureArea8Item.selectCountry' })}</InputLabel>
+							<Select
+								value={region}
+								label="region"
+								onChange={changeRegion}
+							>
+								<ListSubheader>{intl.formatMessage({ id: 'platform.proxy.featureArea8Item.randomCountry' })}</ListSubheader>
+								<MenuItem value={'none'}>{intl.formatMessage({ id: 'platform.proxy.featureArea8Item.random' })}</MenuItem>
+								<ListSubheader>{intl.formatMessage({ id: 'platform.proxy.featureArea8Item.optionalCountry' })}</ListSubheader>
+								{regions.map((n, i) => {
+									return <MenuItem key={i} value={n}>{n}</MenuItem>
+								})}
+							</Select>
+						</FormControl>
+					}
 
 				</Grid>
 
@@ -538,31 +571,34 @@ const FeatureArea8ItemNew = () => {
 					}
 				</Stack>
 			</Grid>
-			<Grid item sx={{ textAlign: 'center', width: '100%' }}>
-				<Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: '3rem' }}>
-					<Tabs value={value} onChange={handleChange}
-						variant="scrollable"
-						scrollButtons
-						allowScrollButtonsMobile>
-						<Tab label={intl.formatMessage({ id: 'platform.proxy.step1.title' })} {...a11yProps(0)} />
-						<Tab label={intl.formatMessage({ id: 'platform.proxy.subscription.user' })} {...a11yProps(1)} />
-					</Tabs>
-				</Box>
-				<CustomTabPanel value={value} index={0}>
-					<Slide direction={animei} in={value === 0} mountOnEnter unmountOnExit>
-						{GetFaucet()}
-					</Slide>
+			{
+				// 未开启代理的情况下, 显示开启代理的UI
+				!isProxyStart &&
+				<Grid item sx={{ textAlign: 'center', width: '100%' }}>
+					<Box sx={{ borderBottom: 1, borderColor: 'divider', marginBottom: '3rem' }}>
+						<Tabs value={value} onChange={handleChange}
+							variant="scrollable"
+							scrollButtons
+							allowScrollButtonsMobile>
+							<Tab label={intl.formatMessage({ id: 'platform.proxy.step1.title' })} {...a11yProps(0)} />
+							<Tab label={intl.formatMessage({ id: 'platform.proxy.subscription.user' })} {...a11yProps(1)} />
+						</Tabs>
+					</Box>
+					<CustomTabPanel value={value} index={0}>
+						<Slide direction={animei} in={value === 0} mountOnEnter unmountOnExit>
+							{GetFaucet()}
+						</Slide>
 
-				</CustomTabPanel>
-				<CustomTabPanel value={value} index={1}>
-					<Slide direction={animei} in={value === 1} mountOnEnter unmountOnExit>
-						<Typography variant="h5" sx={{ fontWeight: '900', textAlign: 'center', paddingTop: '2rem', textTransform: 'uppercase' }}>
-							{intl.formatMessage({ id: 'platform.joinUS.forDeveloper.button' })}
-						</Typography>
-					</Slide>
-				</CustomTabPanel>
-
-			</Grid>
+					</CustomTabPanel>
+					<CustomTabPanel value={value} index={1}>
+						<Slide direction={animei} in={value === 1} mountOnEnter unmountOnExit>
+							<Typography variant="h5" sx={{ fontWeight: '900', textAlign: 'center', paddingTop: '2rem', textTransform: 'uppercase' }}>
+								{intl.formatMessage({ id: 'platform.joinUS.forDeveloper.button' })}
+							</Typography>
+						</Slide>
+					</CustomTabPanel>
+				</Grid>
+			}
 		</Grid>
 	)
 }
