@@ -263,17 +263,17 @@ export const getNodesInfo: () => Promise < StartWorkerResolveForAPI > = () => {
     })
 }
 
-export const setRegion: (region: regionType) => Promise < StartWorkerResolveForAPI > = (region: regionType) => {
-    return new Promise( resolve => {
-        const cmd: WorkerCommand = {
-            cmd: 'setRegion',
-            uuid: v4(),
-            data: [region]
-        }
-        return postMessage (cmd, true, resolve)
+// export const setRegion: (region: regionType) => Promise < StartWorkerResolveForAPI > = (region: regionType) => {
+//     return new Promise( resolve => {
+//         const cmd: WorkerCommand = {
+//             cmd: 'setRegion',
+//             uuid: v4(),
+//             data: [region]
+//         }
+//         return postMessage (cmd, true, resolve)
 
-    })
-}
+//     })
+// }
 
 export const startProxy: (region?: string) => Promise < StartWorkerResolveForAPI > = (region) => {
     return new Promise( resolve => {

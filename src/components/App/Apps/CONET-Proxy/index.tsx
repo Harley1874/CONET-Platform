@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import { Link, Icon } from '@mui/material'
 import useAppState from "../../../../store/appState/useAppState"
 import React, { HTMLAttributes, useState, useEffect, useMemo } from "react"
-import { scanAssets, regionType, faucet as faucetAPI, setRegion as setRegionAPI, getRegiestNodes as getRegiestNodesAPI, startProxy, testLocalServer, getIPaddress, initListenState, getAllNodes } from '../../../../API/index'
+import { scanAssets, regionType, faucet as faucetAPI, getRegiestNodes as getRegiestNodesAPI, startProxy, testLocalServer, getIPaddress, initListenState, getAllNodes } from '../../../../API/index'
 import { logger } from '../../logger'
 import CircularProgress from '@mui/material/CircularProgress'
 import type { nodes_info } from './SaasNodes'
@@ -343,7 +343,7 @@ const FeatureArea8ItemNew = () => {
 
 	const _startProxy = async () => {
 		if (!isProxyStart) {
-			const [status] = await startProxy()
+			const [status] = await startProxy(region)
 			setRegionProgress(false)
 			if (status !== 'SUCCESS') {
 				return setStartProxyError(true)
