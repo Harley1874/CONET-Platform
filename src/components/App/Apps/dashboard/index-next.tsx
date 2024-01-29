@@ -29,11 +29,13 @@ import Proxy from '../CONET-Proxy/index'
 import Miner from '../miner/index'
 import ManageProfiles from '../../PlatformModal/ManageProfiles/ManageProfiles'    //"..//ManageProfiles/ManageProfiles"
 import HubIcon from '@mui/icons-material/Hub'
+import SendIcon from '@mui/icons-material/Send'
 import NodeExplorer from '../nodeExplorer/nodeExplorer'
 import ProfileDropdown from '../../../UI/Dropdowns/ProfileDropdown/ProfileDropdown'
 import Container from '@mui/material/Container'
 import store from '../../../../store/store'
 import CloudNode from '../CloudNode/CloudNode'
+import ChatMessage from '../ChatMessage/index'
 import { useIntl } from "react-intl"
 
 
@@ -195,6 +197,12 @@ const DashBoard = () => {
 				)
 			}
 
+			case 'chatMessage': {
+				return (
+					<ChatMessage />
+				)
+			}
+
 			default: {
 				return (
 					<NodeExplorer />
@@ -245,6 +253,15 @@ const DashBoard = () => {
 						return store.dispatch(setDAPPOpen('nodes'))
 					}
 
+					case 3: {
+						setMenuValue(newValue)
+						if (dAPPOpen === 'chatMessage') {
+							return
+						}
+						debugger
+						return store.dispatch(setDAPPOpen('chatMessage'))
+					}
+
 					default: {
 						return
 					}
@@ -288,6 +305,12 @@ const DashBoard = () => {
 									store.dispatch(setDAPPOpen('nodes'))
 								}} sx={{ opacity: showAppStore ? '1' : '0.5' }}>
 									<SvgIcon component={HubIcon} inheritViewBox sx={{ fontSize: 40 }} />
+								</IconButton>
+								<IconButton onClick={() => {
+									console.log('点击')
+									store.dispatch(setDAPPOpen('chatMessage'))
+								}} sx={{ opacity: showAppStore ? '1' : '0.5' }}>
+									<SvgIcon component={SendIcon} inheritViewBox sx={{ fontSize: 40 }} />
 								</IconButton>
 							</>
 						}
@@ -386,6 +409,7 @@ const DashBoard = () => {
 							<StyledTab {...a11yProps(0)} icon={<SvgIcon component={LocalLaundryServiceIcon} inheritViewBox sx={{ fontSize: 30 }} />} sx={{ paddingBottom: '2rem' }} />
 							<StyledTab {...a11yProps(1)} icon={<SvgIcon component={VpnLockIcon} inheritViewBox sx={{ fontSize: 30 }} />} sx={{ paddingBottom: '2rem' }} />
 							<StyledTab {...a11yProps(2)} icon={<SvgIcon component={HubIcon} inheritViewBox sx={{ fontSize: 30 }} />} sx={{ paddingBottom: '2rem' }} />
+							<StyledTab {...a11yProps(3)} icon={<SvgIcon component={SendIcon} inheritViewBox sx={{ fontSize: 30 }} />} sx={{ paddingBottom: '2rem' }} />
 						</>
 					}
 
