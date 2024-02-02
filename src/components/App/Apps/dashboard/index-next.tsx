@@ -175,18 +175,24 @@ const DashBoard = () => {
 
 			case 'miner': {
 				return (
-					<Miner />
+					<Container sx={{ margin: 'auto', minWidth: '300px', padding: 0 }} >
+						<Miner />
+					</Container>
 				)
 			}
 
 			case 'proxy': {
 				if (!localDaemon) {
 					return (
-						<NoDaemon />
+						<Container sx={{ margin: 'auto', minWidth: '300px', padding: 0 }} >
+							<NoDaemon />
+						</Container>
 					)
 				}
 				return (
-					<Proxy />
+					<Container sx={{ margin: 'auto', minWidth: '300px', padding: 0 }} >
+						<Proxy />
+					</Container>
 				)
 
 			}
@@ -205,7 +211,9 @@ const DashBoard = () => {
 
 			default: {
 				return (
-					<NodeExplorer />
+					<Container sx={{ margin: 'auto', minWidth: '300px', padding: 0 }} >
+						<NodeExplorer />
+					</Container>
 				)
 			}
 		}
@@ -258,7 +266,6 @@ const DashBoard = () => {
 						if (dAPPOpen === 'chatMessage') {
 							return
 						}
-						debugger
 						return store.dispatch(setDAPPOpen('chatMessage'))
 					}
 
@@ -468,20 +475,18 @@ const DashBoard = () => {
 
 		return (
 			<StackContainer sx={{ overflowY: 'auto' }}>
-				<Container maxWidth='lg' className="container" sx={{ margin: 'auto', minWidth: '300px' }}>
-					{
-						!isInitializing &&
-						<Stack sx={{ width: '100%', height: '100%', paddingTop: { xs: '5rem' } }} alignItems="center">
-							<ShowApp />
-						</Stack>
-					}
-					{
-						isInitializing &&
-						<Stack sx={{ width: '100%', height: '100vh', padding: '2rem', margin: '-3rem 0 0 0' }} alignItems="center" justifyContent="center">
-							<LogoImage color='grey' />
-						</Stack>
-					}
-				</Container>
+				{
+					!isInitializing &&
+					<Stack sx={{ width: '100%', height: '100%', paddingBottom: { xs: '56px' } }} alignItems="center" >
+						<ShowApp />
+					</Stack>
+				}
+				{
+					isInitializing &&
+					<Stack sx={{ width: '100%', height: '100vh', padding: '2rem', margin: '-3rem 0 0 0' }} alignItems="center" justifyContent="center">
+						<LogoImage color='grey' />
+					</Stack>
+				}
 			</StackContainer>
 
 		)

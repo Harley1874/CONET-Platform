@@ -57,11 +57,9 @@ const ShowSearchTextInput = () => {
 	const plusTab = () => {
 
 		return (
-			//	@ts-ignore
 			<StyledTab
 				label='+' {...a11yProps(todoContext.todos.length+1)}
 				sx={{minWidth: '2rem', borderRadius: '1rem', minHeight: '2rem', fontSize:'larger'}}
-
 				onClick={addContent}
 			>
 			</StyledTab>

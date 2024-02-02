@@ -67,7 +67,7 @@ const Miner = () => {
 	}, [])
 
 	return (
-		<Grid container spacing={1} columns={{ xs: 4, sm: 8, md: 12 }} sx={{ padding: '0rem 0 10rem 0' }}>
+		<Grid container spacing={1} columns={{ xs: 4, sm: 8, md: 12 }} sx={{ padding: '0rem 0 10rem 0', paddingTop: { xs: '5rem' } }}>
 			<Grid item md={12} sm={8} xs={4} sx={{ textAlign: 'center', width: '100%', padding: '0 0 2rem 0' }}>
 				<Typography variant="h4" sx={{ fontWeight: '900' }}>
 					{intl.formatMessage({ id: 'platform.miner.header.title' })}
