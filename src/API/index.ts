@@ -11,13 +11,12 @@ type WorkerCommandErrorType = 'NOT_READY'|'INVALID_DATA'|
 'NO_UUID'|'INVALID_COMMAND'|'OPENPGP_RUNNING_ERROR'|
 'PouchDB_ERROR'|'GENERATE_PASSCODE_ERROR'|'FAILURE'|'COUNTDOWN'
 
-type WorkerCommandType = 'READY'|'encrypt_TestPasscode'|'getCONETBalance'|'getRegiestNodes'|
+type WorkerCommandType = 'READY'|'testPasscode'|'getCONETBalance'|'getRegiestNodes'|
 'encrypt_createPasscode'|'encrypt_lock'|'encrypt_deletePasscode'|'storePreferences'|
-'newProfile'|'storeProfile'|'invitation'|'WORKER_MESSAGE'|'startProxy'|
+'newProfile'|'invitation'|'WORKER_MESSAGE'|'startProxy'|'createAccount'|
 'isAddress'|'getFaucet'|'syncAsset'|'sendAsset'|'getUSDCPrice'|'registerReferrer'|
-'buyUSDC'|'mintCoNETCash'|'getSINodes'|'getRecipientCoNETCashAddress'|
-'getUserProfile'|'sendMessage'|'setRegion'|'ipaddress'|'startLiveness'|'stopLiveness'|
-'isLivenessRunning'|'referrerList'|'getAllNodes'
+'buyUSDC'|'mintCoNETCash'|'getSINodes'|'getRecipientCoNETCashAddress'|'setRegion'|'ipaddress'|'startLiveness'|'stopLiveness'|
+'isLivenessRunning'|'referrerList'|'getAllNodes'|'getContainer'
 
 export type WorkerCallStatus = 'SUCCESS' | 'NOT_READY' | 'UNKNOWN_COMMAND' |
 'TIME_OUT' | 'SYSTEM_ERROR'
@@ -68,7 +67,6 @@ export interface ContainerData {
         lock?: () => Promise <[WorkerCallStatus, ContainerData?]>
         storePreferences?: () => Promise <[WorkerCallStatus, ContainerData?]>
         newProfile?: (profile: profile) => Promise<StartWorkerResolve>
-        storeProfile?: () => Promise<StartWorkerResolve>
 		isAddress?: (address: string) => Promise <StartWorkerResolve>
 		getFaucet?: (address: string) => Promise <StartWorkerResolve>
 		syncAsset?: () => Promise<StartWorkerResolve>
@@ -165,10 +163,6 @@ export const postUrl: (url: string, data: string, post?: boolean) => Promise<any
     })
 }
 
-export const postPasscode: (passcode: string) => Promise<null|boolean|WorkerCommand> = async (passcode) => {
-    return await postUrl(`http://localhost:3001/loginRequest`, JSON.stringify({data:passcode}))
-}
-
 export const testLocalServer = async () => {
     const result = await postUrl(`http://localhost:3001/ver`, '', false)
     if (result) {
@@ -182,7 +176,7 @@ export const testLocalServer = async () => {
     return null
 }
 
-const postMessage = (cmd: WorkerCommand, close: boolean,  resolve: any, Callback?:(err: string, data: string[]) => void) => {
+export const postMessage = (cmd: WorkerCommand, close: boolean,  resolve: any, Callback?:(err: string, data: string[]) => void) => {
     
     const channel = new BroadcastChannel(channelWrokerListenName)
     
@@ -363,18 +357,6 @@ export const stopLiveness: () => Promise < StartWorkerResolveForAPI > = () => {
 	})
 }
 
-export const encrypt_TestPasscode:(passcode: string) => Promise < StartWorkerResolveForAPI > = (passcode) => new Promise(resolve=> {
-	const search = window.location.search
-	const referrals = search ? search.split('=')[1]: ''
-	const cmd: WorkerCommand = {
-		cmd: 'encrypt_TestPasscode',
-		uuid: v4(),
-		data: [passcode, referrals]
-	}
-
-	return postMessage (cmd, true, resolve)
-	
-})
 
 export const isLivenessRunning: (callback: (err: string, data: string[]) => void) => Promise < StartWorkerResolveForAPI > = (callback) => {
 	
@@ -443,6 +425,18 @@ export const scanAssets = () => {
 	return postMessage (cmd, true, null)
 }
 
+export const getContainer: () => Promise < StartWorkerResolveForAPI > = () => {
+	return new Promise( resolve => {
+		const cmd: WorkerCommand = {
+			cmd: 'getContainer',
+			uuid: v4(),
+			data: []
+		}
+		return postMessage (cmd, true, resolve)
+	})
+}
+
+
 export const referrerList : () => Promise < StartWorkerResolveForAPI > = () => {
     return new Promise( resolve => {
         const cmd: WorkerCommand = {
@@ -481,3 +475,15 @@ export const getProfileBalance:() => Promise < StartWorkerResolveForAPI > = () =
 	return postMessage (cmd, true, resolve)
 })
 
+export const createAccount : (passcord: string) => Promise < StartWorkerResolveForAPI > = (passcord) => {
+    return new Promise( resolve => {
+		const search = window.location.search
+		const referrals = search ? search.split('=')[1]: ''
+        const cmd: WorkerCommand = {
+            cmd: 'encrypt_createPasscode',
+            uuid: v4(),
+            data: [passcord, referrals]
+        }
+        return postMessage (cmd, true, resolve)
+    })
+}

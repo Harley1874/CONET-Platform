@@ -18,7 +18,7 @@ import logger from "../../utilities/logger/logger"
 import {Theme} from "../../theme/types"
 import {Locale} from "../../localization/types"
 import {ClientProfiles, ProfileData} from "../../store/appState/appStateReducer"
-import {createPasscode as api_createPasscode, encrypt_TestPasscode, initListenState} from '../../API/index'
+import {createPasscode as api_createPasscode, initListenState} from '../../API/index'
 let workerService: ContainerData
 
 type PasscodeFunctionParams = {
@@ -131,61 +131,6 @@ export const createPasscode = ({passcode, locale, progress}: PasscodeFunctionPar
     })
 )
 
-export const unlockPasscode = ({passcode, progress}: PasscodeFunctionParams): Promise<PasscodeResolves> => (
-    new Promise<PasscodeResolves>(async (resolve) => {
-		const [status, data] = await encrypt_TestPasscode(passcode)
-		console.log(data)
-		
-        //store.dispatch(setIsPlatformLoading('unlockPasscode'))
-            switch (status) {
-                case 'SUCCESS':{
-					if ( data[0] ) {
-						workerService = {
-							method: {
-								
-							},
-							data: data[0],
-							preferences: {},
-							status: 'UNLOCKED'
-						}
-					}
-					console.log (workerService)
-                    resolve(status)
-                    store.dispatch(setIsUnlocked(true))
-                    store.dispatch(setHasContainer(true))
-
-					const profile = workerService.data.profiles[0]
-					store.dispatch(setActiveProfile(profile))
-					store.dispatch(setCurrentProfileCONET(profile.tokens.conet.balance))
-					store.dispatch(setCurrentProfileCNTP(profile.tokens.cntp.balance))
-					
-					const channel = new BroadcastChannel('system')
-					channel.addEventListener('message', e => {
-						let data
-						try{
-							data = JSON.parse(e.data) 
-						} catch (ex) {
-							return console.log (`encrypt_TestPasscode BroadcastChannel('referrer') JSON.parse(e.data) error`, ex)
-						}
-						workerService = {
-							method: {
-								
-							},
-							data: data,
-							preferences: {},
-							status: 'UNLOCKED'
-						}
-					})
-                    break
-				}
-				default: {
-					resolve('FAILURE')
-				}
-            }
-        
-        store.dispatch(setIsPlatformLoading(null))
-    })
-)
 
 export const deletePasscode = (): Promise<PasscodeResolves> => (
     new Promise<PasscodeResolves>(async (resolve) => {

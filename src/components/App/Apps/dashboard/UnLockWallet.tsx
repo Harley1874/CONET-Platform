@@ -17,9 +17,9 @@ import DialogContentText from '@mui/material/DialogContentText'
 import DialogContent from '@mui/material/DialogContent'
 import DialogActions from '@mui/material/DialogActions'
 import { styled } from '@mui/material/styles'
-import {unlockPasscode} from '../../../../services/workerService/workerService'
+import {platform} from '../../../../API/platform'
 import useAppState from "../../../../store/appState/useAppState"
-import {encrypt_deletePasscode} from '../../../../API/index'
+
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -34,13 +34,14 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
         padding: theme.spacing(3),
     }
 }))
-const UnLockWallet = () => {
+const UnLockWallet = (testPasscode: (passcode: string)=> Promise<boolean>) => {
     const [loading, setLoading] = useState(false)
     const [password, setPassword] = useState('')
     const [passwordError, setPasswordError] = useState(false)
     const [open, setOpen] = React.useState(false)
     const [fruitsInBasket, setFruitsInBasket] = useState<null | HTMLElement>(null)
     const [loadingDelete, setLoadingDelete] = useState(false)
+
     const {
         locale, 
         setLocale,
@@ -66,13 +67,9 @@ const UnLockWallet = () => {
         }
         setLoading(true)
         const passcode = password
-        unlockPasscode({
-            passcode, locale, progress: (progress) => {
-				//	get process 
-            }
-        }).then (status => {
+        testPasscode(passcode).then (status => {
             setLoading(false)
-            if (status === 'SUCCESS') {
+            if (status) {
                 const kkk = isUnlocked
                 const lll = hasContainer
                 return console.log (`Passcord Success!`)
@@ -211,7 +208,7 @@ const UnLockWallet = () => {
                                 onClick={
                                     async ()=> {
                                         setLoadingDelete(true)
-                                        const [yy] = await encrypt_deletePasscode()
+                                        //const [yy] = await encrypt_deletePasscode()
                                         setLoadingDelete(false)
                                         location.reload()
                                     }

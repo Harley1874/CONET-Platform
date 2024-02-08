@@ -13,9 +13,8 @@ import CircularProgress from '@mui/material/CircularProgress'
 import IconButton from '@mui/material/IconButton'
 import Box from '@mui/material/Box'
 import useAppState from "../../../../store/appState/useAppState"
-import {createPasscode} from '../../../../API/index'
 
-const CreateWallet = () => {
+const CreateWallet = (createAccount: (passcode: string) => Promise<string>) => {
     const {
         locale, 
         setLocale,
@@ -42,7 +41,7 @@ const CreateWallet = () => {
             return setPasswordError (true)
         }
         setLoading(true)
-        const [yyy, rrr] = await createPasscode(password, locale)
+        await createAccount(password)
         location.reload()
     }
 

@@ -37,6 +37,8 @@ import CloudNode from '../CloudNode/CloudNode'
 import { useIntl } from "react-intl"
 
 
+import {platform, type_platformStatus } from '../../../../API/platform'
+
 interface StyledTabsProps {
     children?: React.ReactNode
     value?: number
@@ -150,57 +152,73 @@ const DashBoard = () => {
 		
     } = useAppState()
 	const intl = useIntl()
-
+	const [conetPlatform, setConetPlatform] = useState<type_platformStatus>('')
+	const [workerLoading, setWorkerLoading] = useState(0)
+	const conet_platform = new platform(setConetPlatform, setWorkerLoading)
     const [menuValue, setMenuValue] = useState(0)
     const { mode, setMode } = useColorScheme()
     const [showProfileDropdown, setShowProfileDropdown] = useState(false)
 
+	// useEffect(() => {
+	// 	const fetchData = async () => {
+	// 		if (!active) {
+	// 			return
+	// 		}
+	// 		const uuu = await conet_platform.passcode()
+	// 		console.log(uuu)
+	// 	}
+
+	// 	let active = true
+	// 	fetchData()
+	// 	return () => { active = false }
+	// }, [isInitializing])
 
     const ShowApp = () => {
-		if (!hasContainer) {
-			return (
-				<CreateWallet/>
-			)
-		}
-		if (!isUnlocked) {
-			return (
-				<UnLockWallet/>
-			)
-		}
+
+		switch (conetPlatform) {
+
+			case 'NONE': {
+				return CreateWallet(conet_platform.createAccount)
+			}
+			case 'LOCKED': {
+				return UnLockWallet(conet_platform.testPasscode)
+				
+			}
+			case 'UNLOCKED': {
+				switch (dAPPOpen) {
+
+					case 'miner': {
+						return (
+							<Miner />
+						)
+					}
 		
-
-        switch (dAPPOpen) {
-
-            case 'miner': {
-                return (
-                    <Miner />
-                )
-            }
-
-            case 'proxy': {
-				if (!localDaemon) {
-					return (
-						<NoDaemon/>
-					)
+					case 'proxy': {
+						if (!localDaemon) {
+							return (
+								<NoDaemon/>
+							)
+						}
+						return (
+							<Proxy />
+						)
+						
+					}
+		
+					case 'cloudNode': {
+						return (
+							<CloudNode />
+						)
+					}
+		
+					default: {
+						return (
+							<NodeExplorer />
+						)
+					}
 				}
-				return (
-					<Proxy />
-				)
-                
 			}
-
-			case 'cloudNode': {
-				return (
-					<CloudNode />
-				)
-			}
-
-            default: {
-				return (
-                    <NodeExplorer />
-                )
-            }
-        }
+		}
 
     }
 
