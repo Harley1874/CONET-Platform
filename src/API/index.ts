@@ -14,7 +14,7 @@ type WorkerCommandErrorType = 'NOT_READY'|'INVALID_DATA'|
 type WorkerCommandType = 'READY'|'testPasscode'|'getCONETBalance'|'getRegiestNodes'|
 'encrypt_createPasscode'|'encrypt_lock'|'encrypt_deletePasscode'|'storePreferences'|
 'newProfile'|'invitation'|'WORKER_MESSAGE'|'startProxy'|'createAccount'|
-'isAddress'|'getFaucet'|'syncAsset'|'sendAsset'|'getUSDCPrice'|'registerReferrer'|
+'isAddress'|'getFaucet'|'syncAsset'|'sendAsset'|'getUSDCPrice'|'registerReferrer'|'showSRP'|
 'buyUSDC'|'mintCoNETCash'|'getSINodes'|'getRecipientCoNETCashAddress'|'setRegion'|'ipaddress'|'startLiveness'|'stopLiveness'|
 'isLivenessRunning'|'referrerList'|'getAllNodes'|'getContainer'
 

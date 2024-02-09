@@ -63,4 +63,22 @@ export class platform {
 			return resolve (true)
 		})
 	})
+
+	public showSRP: () => Promise<string> = () => new Promise(async resolve=> {
+		if (!this.authorization_key) {
+			return resolve('')
+		}
+		const cmd: WorkerCommand = {
+            cmd: 'showSRP',
+            uuid: v4(),
+            data: [this.authorization_key]
+        }
+		return postMessage (cmd, false, null, (err, data) => {
+			if (err) {
+				return resolve ('')
+			}
+			return resolve (data[0])
+		})
+	})
+
 }
