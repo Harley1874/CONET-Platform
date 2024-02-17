@@ -37,7 +37,9 @@ import CloudNode from '../CloudNode/CloudNode'
 import { useIntl } from "react-intl"
 
 
+
 import {platform, type_platformStatus } from '../../../../API/platform'
+import TestPage from '../TestUnit/index'
 
 interface StyledTabsProps {
     children?: React.ReactNode
@@ -152,26 +154,40 @@ const DashBoard = () => {
 		
     } = useAppState()
 	const intl = useIntl()
+
+
+
 	const [conetPlatform, setConetPlatform] = useState<type_platformStatus>('')
 	const [workerLoading, setWorkerLoading] = useState(0)
 	const conet_platform = new platform(setConetPlatform, setWorkerLoading)
     const [menuValue, setMenuValue] = useState(0)
     const { mode, setMode } = useColorScheme()
+	const [authorization_key, setAuthorization_key] = useState('')
     const [showProfileDropdown, setShowProfileDropdown] = useState(false)
 
-	// useEffect(() => {
-	// 	const fetchData = async () => {
-	// 		if (!active) {
-	// 			return
-	// 		}
-	// 		const uuu = await conet_platform.passcode()
-	// 		console.log(uuu)
-	// 	}
 
-	// 	let active = true
-	// 	fetchData()
-	// 	return () => { active = false }
-	// }, [isInitializing])
+	/**
+	 * 
+	 * 			TEST UNIT
+	 * 
+	 */
+
+	useEffect(() => {
+		const fetchData = async () => {
+			if (!active) {
+				return
+			}
+			//		Passcode success
+			if (conetPlatform === 'UNLOCKED') {
+				//	storage authorization_key
+				setDAPPOpen('testPage')
+			}
+		}
+
+		let active = true
+		fetchData()
+		return () => { active = false }
+	}, [conetPlatform])
 
     const ShowApp = () => {
 
@@ -181,17 +197,17 @@ const DashBoard = () => {
 				return CreateWallet(conet_platform.createAccount)
 			}
 			case 'LOCKED': {
-				return UnLockWallet(conet_platform.testPasscode)
+				return UnLockWallet(conet_platform.testPasscode, setAuthorization_key)
 				
 			}
 			case 'UNLOCKED': {
 				switch (dAPPOpen) {
 
-					case 'miner': {
-						return (
-							<Miner />
-						)
-					}
+					// case 'miner': {
+					// 	return (
+					// 		<Miner />
+					// 	)
+					// }
 		
 					case 'proxy': {
 						if (!localDaemon) {
@@ -212,9 +228,7 @@ const DashBoard = () => {
 					}
 		
 					default: {
-						return (
-							<NodeExplorer />
-						)
+						return TestPage(conet_platform, authorization_key)
 					}
 				}
 			}

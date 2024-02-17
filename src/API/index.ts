@@ -14,7 +14,7 @@ type WorkerCommandErrorType = 'NOT_READY'|'INVALID_DATA'|
 type WorkerCommandType = 'READY'|'testPasscode'|'getCONETBalance'|'getRegiestNodes'|
 'encrypt_createPasscode'|'encrypt_lock'|'encrypt_deletePasscode'|'storePreferences'|
 'newProfile'|'invitation'|'WORKER_MESSAGE'|'startProxy'|'createAccount'|
-'isAddress'|'getFaucet'|'syncAsset'|'sendAsset'|'getUSDCPrice'|'registerReferrer'|'showSRP'|
+'isAddress'|'getFaucet'|'syncAsset'|'sendAsset'|'getUSDCPrice'|'registerReferrer'|'showSRP'|'getAllProfiles'|
 'buyUSDC'|'mintCoNETCash'|'getSINodes'|'getRecipientCoNETCashAddress'|'setRegion'|'ipaddress'|'startLiveness'|'stopLiveness'|
 'isLivenessRunning'|'referrerList'|'getAllNodes'|'getContainer'
 
@@ -176,7 +176,7 @@ export const testLocalServer = async () => {
     return null
 }
 
-export const postMessage = (cmd: WorkerCommand, close: boolean,  resolve: any, Callback?:(err: string, data: string[]) => void) => {
+export const postMessage = (cmd: WorkerCommand, close: boolean,  resolve: any, Callback?:(err: string, data: any[]) => void) => {
     
     const channel = new BroadcastChannel(channelWrokerListenName)
     

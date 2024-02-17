@@ -34,7 +34,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
         padding: theme.spacing(3),
     }
 }))
-const UnLockWallet = (testPasscode: (passcode: string)=> Promise<boolean>) => {
+const UnLockWallet = (testPasscode: (passcode: string)=> Promise<[boolean, string]>, setAuthorization_key: React.Dispatch<React.SetStateAction<string>>) => {
     const [loading, setLoading] = useState(false)
     const [password, setPassword] = useState('')
     const [passwordError, setPasswordError] = useState(false)
@@ -42,23 +42,9 @@ const UnLockWallet = (testPasscode: (passcode: string)=> Promise<boolean>) => {
     const [fruitsInBasket, setFruitsInBasket] = useState<null | HTMLElement>(null)
     const [loadingDelete, setLoadingDelete] = useState(false)
 
-    const {
-        locale, 
-        setLocale,
-        showAppStore,
-        localDaemon,
-        hasContainer,
-        isInitializing,
-        setlocalDaemon,
-        isUnlocked,
-        theme,
-        setTheme,
-        showMiner,
-        dAPPInitialize
-    } = useAppState()
     const intl = useIntl()
 
-    const processUnlockPassword = () => {
+    const processUnlockPassword = async () => {
         if (password.length < 6) {
             setTimeout (() => {
                 setPasswordError (false)
@@ -67,15 +53,16 @@ const UnLockWallet = (testPasscode: (passcode: string)=> Promise<boolean>) => {
         }
         setLoading(true)
         const passcode = password
-        testPasscode(passcode).then (status => {
-            setLoading(false)
-            if (status) {
-                const kkk = isUnlocked
-                const lll = hasContainer
-                return console.log (`Passcord Success!`)
-            }
-            return setPasswordError (true)
-        })
+
+        const [status, authorization_key] = await testPasscode(passcode)
+		
+		setLoading(false)
+
+		if (status) {
+			return setAuthorization_key(authorization_key)
+		}
+		return setPasswordError (true)
+	
     }
 
     const keyUpHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
