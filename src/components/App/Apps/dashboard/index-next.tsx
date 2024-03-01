@@ -25,10 +25,12 @@ import DarkIcon from "@mui/icons-material/DarkModeOutlined"
 import LightIcon from "@mui/icons-material/LightModeOutlined"
 import { US, CN, JP, TW } from 'country-flag-icons/react/3x2'
 import NoDaemon from '../../NoDaemon/index'
+import Browser from '../Browser/index'
 import Proxy from '../CONET-Proxy/index'
 import Miner from '../miner/index'
 import ManageProfiles from '../../PlatformModal/ManageProfiles/ManageProfiles'    //"..//ManageProfiles/ManageProfiles"
 import HubIcon from '@mui/icons-material/Hub'
+import SettingsInputAntennaIcon from '@mui/icons-material/SettingsInputAntenna';
 import NodeExplorer from '../nodeExplorer/nodeExplorer'
 import ProfileDropdown from '../../../UI/Dropdowns/ProfileDropdown/ProfileDropdown'
 import Container from '@mui/material/Container'
@@ -195,6 +197,12 @@ const DashBoard = () => {
                 )
             }
 
+            case 'browser': {
+                return (
+                    <Browser />
+                )
+            }
+
             default: {
                 return (
                     <NodeExplorer />
@@ -245,6 +253,14 @@ const DashBoard = () => {
                         return store.dispatch(setDAPPOpen('nodes'))
                     }
 
+                    case 3: {
+                        setMenuValue(newValue)
+                        if (dAPPOpen === 'browser') {
+                            return
+                        }
+                        return store.dispatch(setDAPPOpen('browser'))
+                    }
+
                     default: {
                         return
                     }
@@ -290,6 +306,12 @@ const DashBoard = () => {
                                     store.dispatch(setDAPPOpen('nodes'))
                                 }} sx={{ opacity: showAppStore ? '1' : '0.5' }}>
                                     <SvgIcon component={HubIcon} inheritViewBox sx={{ fontSize: 40 }} />
+                                </IconButton>
+
+                                <IconButton onClick={() => {
+                                    store.dispatch(setDAPPOpen('browser'))
+                                }} sx={{ opacity: showAppStore ? '1' : '0.5' }}>
+                                    <SvgIcon component={SettingsInputAntennaIcon} inheritViewBox sx={{ fontSize: 40 }} />
                                 </IconButton>
                             </>
                         }
@@ -388,6 +410,7 @@ const DashBoard = () => {
                             <StyledTab {...a11yProps(0)} icon={<SvgIcon component={LocalLaundryServiceIcon} inheritViewBox sx={{ fontSize: 30 }} />} sx={{ paddingBottom: '2rem' }} />
                             <StyledTab {...a11yProps(1)} icon={<SvgIcon component={VpnLockIcon} inheritViewBox sx={{ fontSize: 30 }} />} sx={{ paddingBottom: '2rem' }} />
                             <StyledTab {...a11yProps(2)} icon={<SvgIcon component={HubIcon} inheritViewBox sx={{ fontSize: 30 }} />} sx={{ paddingBottom: '2rem' }} />
+                            <StyledTab {...a11yProps(3)} icon={<SvgIcon component={SettingsInputAntennaIcon} inheritViewBox sx={{ fontSize: 30 }} />} sx={{ paddingBottom: '2rem' }} />
                         </>
                     }
 
@@ -446,20 +469,18 @@ const DashBoard = () => {
 
         return (
             <StackContainer sx={{ overflowY: 'auto' }}>
-                <Container maxWidth='lg' className="container" sx={{ margin: 'auto', minWidth: '300px' }}>
-                    {
-                        !isInitializing &&
-                        <Stack sx={{ width: '100%', height: '100%', paddingTop: { xs: '5rem' } }} alignItems="center">
-                            <ShowApp />
-                        </Stack>
-                    }
-                    {
-                        isInitializing &&
-                        <Stack sx={{ width: '100%', height: '100vh', padding: '2rem', margin: '-3rem 0 0 0' }} alignItems="center" justifyContent="center">
-                            <LogoImage color='grey' />
-                        </Stack>
-                    }
-                </Container>
+                {
+                    !isInitializing &&
+                    <Stack sx={{ width: '100%', height: '100%' }} alignItems="center">
+                        <ShowApp />
+                    </Stack>
+                }
+                {
+                    isInitializing &&
+                    <Stack sx={{ width: '100%', height: '100vh', padding: '2rem', margin: '-3rem 0 0 0' }} alignItems="center" justifyContent="center">
+                        <LogoImage color='grey' />
+                    </Stack>
+                }
             </StackContainer>
 
         )

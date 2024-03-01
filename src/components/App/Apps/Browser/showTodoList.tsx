@@ -1,103 +1,120 @@
-import React, {useState, useContext, useEffect, useCallback} from 'react'
-import ToDoContext, {Todo} from './TodoContext'
-import {todo} from './index'
+/*
+ * @Author: harley
+ * @Date: 2024-01-18 17:05:33
+ * @LastEditors: harley
+ * @Description: 
+ */
+/*
+ * @Author: harley
+ * @Date: 2024-01-18 17:05:33
+ * @LastEditors: harley
+ * @Description: 
+ */
+import React, { useState, useContext, useEffect, useCallback } from 'react'
+import ToDoContext, { Todo } from './TodoContext'
+import { todo } from './index'
 import Grid from '@mui/material/Grid'
-import TabArea, {StyledTab} from './TabArea'
-import Tabs from '@mui/material/Tabs'
+import TabArea, { StyledTab } from './TabArea'
+import SvgIcon from '@mui/material/SvgIcon'
 import Box from '@mui/material/Box'
 import SearchPage from './searchPage'
+import appStyles from "./browser.module.scss";
+import { ReactComponent as StarIcon } from '../../../../assets/logo/CoNET_logo.svg'
+import AddIcon from '@mui/icons-material/Add';
+import { TabList, TabContext, TabPanel } from '@mui/lab';
+import { Tabs, Tab } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import IframePage from './iframePage'
+const AntTabs = styled(TabList)({
+	'& .MuiTabs-indicator': {
+		display: 'none'
+	},
+});
 
-function a11yProps(index: number) {
-	return {
-	  id: `simple-tab-${index}`,
-	  'aria-controls': `simple-tabpanel-${index}`,
-	  key: `simple-tab-${index}`
-	}
-}
 const ShowSearchTextInput = () => {
+
 	const todoContext = useContext(ToDoContext)
-	const [currectTodo, setCurrentTodo] = useState<Todo>(todoContext.todos[0])
-	const [currentTab, setCurrentTab] = useState(0)
-	
+
+	const [value, setValue] = React.useState('0');
 	useEffect(() => {
-		
-		if (currentTab >= todoContext.todos.length) {
-			const current = todoContext.todos.length -1
-			const todo = todoContext.todos[current]
-			setCurrentTodo(todo)
-			setCurrentTab(current)
+		if (todoContext.todos.length) {
+			setValue(todoContext.currentTodo.keyID)
 		}
-		console.log (todoContext.todos)
 	}, [todoContext.todos])
+
+	const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+		setValue(newValue);
+		todoContext.showIFrame(todoContext.todos.find(n => n.keyID === newValue))
+	};
 
 	const addContent = () => {
 		const _todo = todo()
 		todoContext.addOrChangTodo(_todo)
-		setCurrentTodo (_todo)
 	}
 
-	const handleChange = 
-		(event: React.SyntheticEvent, newValue: number) => {
 
-		//		check current change
-
-
-		const index = todoContext.todos.findIndex (n => n.keyID === currectTodo.keyID)
-		if (index > -1) {
-			const todo = todoContext.todos[index]
-			if ( currectTodo.searchText != todo.searchText) {
-				todoContext.addOrChangTodo (currectTodo)
-			}
-
-		}
-		setCurrentTab(newValue)
-		setCurrentTodo (todoContext.todos[newValue])
-	}
 
 	const plusTab = () => {
-
 		return (
-			//	@ts-ignore
-			<StyledTab
-				label='+' {...a11yProps(todoContext.todos.length+1)}
-				sx={{minWidth: '2rem', borderRadius: '1rem', minHeight: '2rem', fontSize:'larger'}}
-
-				onClick={addContent}
-			>
-			</StyledTab>
+			<div className={appStyles.plusTab} onClick={addContent}>
+				<AddIcon />
+			</div>
 		)
 	}
 
-	return (
-		<Grid container item xs={12} width="100%" sx={{backgroundColor:'#969696', paddingTop: '0.2rem'}}>
-	
-			<Box sx={{ width: '100%' }}>
-				<Box>
-					<Tabs variant="scrollable" value={currentTab} 
-						allowScrollButtonsMobile  
-						aria-label="CoNET Browser Tabs Bar" 
-						scrollButtons="auto" sx={{minHeight: '32px'}} 
-						onChange={handleChange}
-					>
-						{
-							todoContext.todos.length &&
-							todoContext.todos.map( (todo: Todo, index: number) => 
-								TabArea (todo, index, currectTodo)
-							)
-						}
-						{/* {
-							plusTab()
-						} */}
-					</Tabs>
+	// logo组件
+	const logo = () => {
+		return (
+			<div className={appStyles.logo}>
+				<SvgIcon component={StarIcon} inheritViewBox
+					sx={{ fontSize: '20px' }}
+				/>
+			</div>
+		)
+	}
 
-				</Box>
-				<Box sx={{ borderBottom: 0,backgroundColor: 'white' }}>
-				{
-					todoContext.todos.length &&
-						todoContext.todos.map((todo, index) => SearchPage(todo, index, currentTab, setCurrentTodo))
-						
-				}
-				</Box>
+
+
+
+	return (
+		<Grid container item xs={12} width="100%" sx={{ backgroundColor: '#d3e3fd' }}>
+			<Box sx={{ width: '100%' }}>
+				<div className={appStyles.container}>
+					<TabContext value={todoContext.currentTodo.keyID} >
+						<div className={appStyles.navbar}>
+							{logo()}
+							<AntTabs onChange={handleChange} className={appStyles.navList} indicatorColor="secondary">
+								{
+									todoContext.todos.length &&
+									todoContext.todos.map((todo: Todo) =>
+										<Tab
+											label={`新标签页`}
+											value={todo.keyID}
+											key={todo.keyID}
+											className={`${appStyles.navItem} ${todo.keyID === todoContext.currentTodo.keyID ? appStyles.selected : ''}`}
+										></Tab>
+									)
+								}
+							</AntTabs>
+							{plusTab()}
+						</div>
+						<div className={appStyles.tabsContents}>
+							{
+								todoContext.todos.length &&
+								todoContext.todos.map((todo: Todo) =>
+									<TabPanel
+										value={todo.keyID}
+										key={todo.keyID}
+										className={`${appStyles.contentPanel} ${todo.keyID === todoContext.currentTodo.keyID ? appStyles.active : ''}`}
+									>
+										<IframePage currentTodo={todoContext.currentTodo}></IframePage>
+									</TabPanel>
+								)
+							}
+						</div>
+
+					</TabContext>
+				</div>
 			</Box>
 
 		</Grid>
